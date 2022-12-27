@@ -690,10 +690,9 @@ template {
      object-position: center;
 }
 
-* {
+@im * {
   box-sizing: border-box;
 }
-
 html {
   height: 100vh;
   font-size: 10px;
