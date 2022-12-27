@@ -25,7 +25,7 @@
                   <div class="card-details">
                       <div class="two-field">
                           <div class="card-details__icons">
-                              <img src="../assets/img/modal-window/mastercard.png" alt="Card">
+                              <img src="../../../assets/img/modal-window/mastercard.png" alt="Card">
                           </div>
                           <div class="card-details__number">
                               <label for="">Card number</label>
