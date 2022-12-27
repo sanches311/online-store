@@ -424,4 +424,289 @@ template {
 .git-dev a:hover {
   border-bottom: 1px solid #FFCA42;
   cursor: pointer;
+}
+
+.main-page {
+  padding-top: 20px;
+}
+.main-page .container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.all-filters {
+  width: 30%;
+}
+.all-filters__tasks-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.all-filters__category {
+  margin-top: 10px;
+}
+
+.reset,
+.copy {
+  background: #F9F9F9;
+  border: 1px solid #D1D1D1;
+  border-radius: 12px;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.9rem;
+  color: #B4C7E7;
+  padding: 10px 15px;
+}
+
+.category {
+  padding: 0 10px;
+}
+.category__title {
+  font-family: "Cardo", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  color: #151515;
+  margin: 0;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.categoty__item {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.categoty__item p {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  color: #151515;
+}
+
+.filter-matching {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  color: #FFCA42;
+}
+
+.min-max {
+  width: 50%;
+  margin: 0 auto;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: #151515;
+}
+
+.slider {
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.slider input {
+  width: 100%;
+}
+
+.all-products {
+  width: 68%;
+}
+.all-products__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F9F9F9;
+  border: 1px solid #D1D1D1;
+  border-radius: 12px;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.9rem;
+  color: #B4C7E7;
+  padding: 5px 10px;
+}
+.all-products h3 {
+  margin: 0;
+}
+.all-products__container {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.found {
+  color: #FFCA42;
+}
+
+.search input {
+  background: #F9F9F9;
+  border: 1px solid #D1D1D1;
+  border-radius: 12px;
+  padding: 3px 10px;
+}
+
+.display {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col-2,
+.col-3 {
+  filter: drop-shadow(0px 0px 5px rgba(27, 55, 100, 0.3));
+}
+
+.products-container-2 {
+  width: 49%;
+  max-height: 280px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  filter: drop-shadow(0px 0px 5px rgba(27, 55, 100, 0.3));
+  padding: 5px 0;
+}
+
+.products-container-img {
+  max-width: 100px;
+  height: 100%;
+  margin-right: 10px;
+}
+.products-container-img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+}
+
+.products-container-description h3 {
+  font-family: "Cardo", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: #151515;
+  margin: 0;
+  margin-bottom: 7px;
+}
+
+.description-item {
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.description-item__category {
+  margin: 0;
+}
+.description-item__info {
+  margin: 0;
+  color: #A9A9A9;
+}
+
+.products-container-price {
+  margin: 10px 0;
+  font-family: "Cardo", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  color: #151515;
+  text-align: center;
+}
+
+.main-page-item-price {
+  color: #FFCA42;
+}
+
+.products-container-buttons {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-page-item-button {
+  width: 100%;
+  margin-bottom: 10px;
+  background: #1B3764;
+  border: 1px solid #151515;
+  border-radius: 12px;
+  padding: 5px;
+  font-family: "Cardo", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.products-container-3 {
+  width: 33%;
+  margin-bottom: 10px;
+}
+.products-container-3 h3 {
+  font-family: "Cardo", serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  color: #151515;
+  margin: 0;
+  margin-bottom: 7px;
+  text-align: center;
+}
+
+.products-container-img-3 {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+.products-container-img-3 img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100vh;
+  font-size: 10px;
+  background-color: #F5F5F5;
+}
+
+.wrapper {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 80%;
+  margin: 0 auto;
+  height: 100%;
 }/*# sourceMappingURL=app.css.map */
