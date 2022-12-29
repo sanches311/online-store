@@ -1,0 +1,353 @@
+@import "../base/variabless";
+
+.cart-page {
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.products {
+  width: 72%;
+  min-height: 900px;
+
+  &__title {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 2.8rem;
+    line-height: 3.2rem;
+    color: $color1;
+    margin: 15px 0;
+  }
+
+  &__items {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 2.8rem;
+    line-height: 3.2rem;
+    color: $color1;
+  }
+
+  &__pagination {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 2.8rem;
+    line-height: 3.2rem;
+    color: $color1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .pagination {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+.products-header {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-items {
+  color: $color2;
+}
+
+.material-symbols-outlined {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.cart-pagination {
+  color: $color2;
+  margin: 0;
+}
+
+.products-container {
+  width: 100%;
+
+  &__item {
+    max-height: 280px;
+    border: 1px solid #D1D1D1;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+  }
+}
+
+.item {
+
+  &__num {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 2.8rem;
+    line-height: 3.2rem;
+    color: $color-text1;
+    margin-right: 5px;
+  }
+
+  &__img {
+    max-width: 25%;
+    height: 100%;
+    filter: drop-shadow(0px 0px 5px rgba(27, 55, 100, 0.3));
+    margin-right: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &__title {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 1.8rem;
+    line-height: 2.7rem;
+    color: $color1;
+    margin: 0;
+  }
+
+  &__info {
+    font-family: $text-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: #575757;
+  }
+
+  &__data {}
+
+  &__stock {
+    font-family: $text-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: #575757;
+    margin-bottom: 10px;
+  }
+
+  &__add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  &__price {
+    font-family: $text-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    color: #575757;
+  }
+}
+
+.item-description {
+  width: 40%;
+  margin-right: 10px;
+}
+
+.data-container {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-data,
+.text-data {
+  margin: 0;
+  font-family: $text-fonts;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: 1.2rem;
+  line-height: 1.9rem;
+  color: #A9A9A9;
+}
+
+.item-add {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-stock {
+  color: $color2;
+}
+
+.add-button,
+.remove-button {
+  padding: 0 5px;
+  border: 2px solid $color-text1;
+  border-radius: 12px;
+  font-family: $headers-fonts;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: 1.8rem;
+  color: $color1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item {
+  font-family: $headers-fonts;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  color: $color1;
+  margin: 0 7px;
+}
+
+.cart-item-price {
+  color: $color2;
+}
+
+.summary {
+  margin-top: 10px;
+  border: 1px solid #D1D1D1;
+  border-radius: 12px;
+  padding: 5px;
+
+  &__title {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 2.8rem;
+    line-height: 3.2rem;
+    color: $color1;
+    margin: 0;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  &__products,
+  &__price {
+    margin: 0;
+    font-family: $text-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 1.2rem;
+    line-height: 1.9rem;
+    color: #A9A9A9;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  &__promo {}
+
+  &__button {
+    margin: 10px 0;
+
+    button {
+      width: 100%;
+      background: $color1;
+      border: 2px solid $color-text2;
+      border-radius: 12px;
+      padding: 5px 10px;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 22px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+}
+
+.summary-header {
+  width: 100%;
+  padding: 5px;
+
+}
+
+.summary-container {}
+
+.total-products,
+.total-price {
+  color: $color-text2;
+}
+
+.promo {
+
+  &__input {
+    width: 90%;
+    margin-bottom: 10px;
+    margin: $margit-center;
+
+    input {
+      background: #F9F9F9;
+      border: 1px solid #D1D1D1;
+      border-radius: 12px;
+      padding: 3px 10px;
+    }
+  }
+
+  &__add {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__help {
+    font-family: $text-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 1.2rem;
+    line-height: 1.9rem;
+    color: #A9A9A9;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+}
+
+.promo-code {
+  font-family: $headers-fonts;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: $color-text2;
+  text-align: left;
+
+  margin-right: 5px;
+}
+
+.promo-code-button {
+  padding: 0 5px;
+  border: 2px solid $color-text1;
+  border-radius: 12px;
+  font-family: $headers-fonts;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: 1.4rem;
+  color: $color1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

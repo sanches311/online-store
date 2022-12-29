@@ -1,0 +1,47 @@
+@import "../base/variabless";
+
+.main-page-not-found {
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 0 10px;
+  }
+}
+
+.reading {
+  width: 50%;
+  height: calc(632px + 20px);
+  position: relative;
+
+  &__picture {
+    width: 535px;
+    height: 632px;
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    filter: drop-shadow(0px 0px 20px rgba(27, 55, 100, 0.3));
+  }
+
+  &__border {
+    width: 505px;
+    height: 602px;
+    border: 10px solid $color2;
+
+  }
+}
+
+.sorry {
+  width: 35%;
+  position: relative;
+  top: -40px;
+
+  h2 {
+    font-family: $headers-fonts;
+    font-style: normal;
+    font-weight: $font-weight;
+    font-size: 3.2rem;
+    line-height: 5rem;
+    color: $color-text2;
+  }
+}
