@@ -1,6 +1,67 @@
-import { cart } from '../store';
+import { Product } from "../../interfaces/Product";
+import { PRODUCTS} from "../../db/products.db";
+import { ProductItem } from "./productItem/productItem";
 
-export default {
+export default class Cart {
+  private products: Product[] = PRODUCTS;
+ 
+  render() {
+    return `
+    <main class="cart-page">
+        <div class="container">
+          <section class="products">
+            <div class="products-header">
+              <h3 class="products__title">Products in cart</h3>
+              <div class="products__items">
+                items: <span class="cart-items">3</span>
+              </div>
+              <div class="products__pagination">
+                page:
+                <div class="pagination">
+                  <span class="material-symbols-outlined">arrow_back_ios</span>
+                  <span class="cart-pagination">1</span>
+                  <span class="material-symbols-outlined">arrow_forward_ios</span>
+                </div>
+              </div>
+            </div>
+            <div class="products-container">
+              ${ this.products.map((item: Product) => new ProductItem(item)).map((product: ProductItem) => product.render()).join('')}
+            </div>
+          </section>
+          <section class="summary">
+            <div class="summary-header">
+              <h3 class="summary__title">Summary</h3>
+            </div>
+            <div class="summary-container">
+              <div class="summary__products">
+                Products: <span class="total-products">8</span>
+              </div>
+              <div class="summary__price">
+                Total: <span class="total-price">256.25</span> USD
+              </div>
+              <div class="summary__promo">
+                <div class="promo__input">
+                  <input type="text">
+                </div>
+                <div class="promo__add">
+                  <p class="promo-code">Какой-то текст прококода - 10%</p>
+                  <button class="promo-code-button">add</button>
+                </div>
+                <div class="promo__help">
+                  Promo for test: 'html', 'css', 'js'
+                </div>
+              </div>
+              <div class="summary__button">
+                <button>buy now</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>`;
+  }
+}
+
+/* export default {
     getCartPageHtml(): string {
         let html = `<main class="cart-page">
         <div class="container">
@@ -87,4 +148,4 @@ export default {
       </main>`;
         return html;
     },
-};
+}; */

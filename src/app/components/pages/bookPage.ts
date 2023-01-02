@@ -1,4 +1,4 @@
-import { products } from '../store';
+import { getProducts } from "../../db/products.db";
 
 export default {
     getBookPageHtml(id: number): string {
