@@ -11,6 +11,7 @@ export default {
     async startRoute(): Promise<void> {
         const products = await mainPage.render();
         render(products);
+        mainPage.addEvents();
     },
     async bookRoute(props: { id: number }) {
         const product = await bookPage.getBookPageHtml(props.id);

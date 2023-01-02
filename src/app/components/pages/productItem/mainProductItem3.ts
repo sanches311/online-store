@@ -2,8 +2,9 @@ import { Product } from "../../../interfaces/Product";
 
 export class MainProductItem3 {
  constructor(private item: Product) {
-  console.log(item)
+
  }
+ private getHtmlId = () => `product_${this.item.id}`;
 
   render() {
     return `
@@ -13,10 +14,21 @@ export class MainProductItem3 {
                   <img src="${this.item.imageUrl[0]}" alt="Product image">
                 </div>
                 <div class="products-container-buttons">
-                  <button class="main-page-item-button">add to cart</button>
+                  <button class="main-page-item-button" id='${this.getHtmlId()}'>add to cart</button>
                   <button class="main-page-item-button">details</button>
                 </div>
               </div>
     `;
   }
+  addEvents() {
+    const button = document.getElementById(this.getHtmlId());
+   if (!button) {
+     throw new Error('Button is undefined');
+   }
+   button.addEventListener('click', (event) => {
+     event.preventDefault();
+    console.log(event)
+   });
+   
+ }
 }

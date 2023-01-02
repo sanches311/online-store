@@ -1,11 +1,24 @@
 import { Product } from "../../interfaces/Product";
 import { PRODUCTS} from "../../db/products.db";
 import { ProductItem } from "./productItem/productItem";
+import localStorageState from "../../store/state";
 
 export default class Cart {
-  private products: Product[] = PRODUCTS;
+  private products: Product[] = [];
+  private productStore = localStorageState.getProducts();
+  constructor() {
+   
+  }
+  createProductsComponent() {
+    PRODUCTS.forEach(({ id }) => {
+      if (this.productStore.indexOf(id) !== -1) {
+        this.products.push(PRODUCTS[id]);
+      }
+    })
+  }
  
   render() {
+    this.createProductsComponent();
     return `
     <main class="cart-page">
         <div class="container">
@@ -25,7 +38,7 @@ export default class Cart {
               </div>
             </div>
             <div class="products-container">
-              ${ this.products.map((item: Product) => new ProductItem(item)).map((product: ProductItem) => product.render()).join('')}
+            ${ this.products.map((item: Product) => new ProductItem(item)).map((product: ProductItem) => product.render()).join('')}
             </div>
           </section>
           <section class="summary">

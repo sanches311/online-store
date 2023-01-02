@@ -3,8 +3,14 @@ import { PRODUCTS} from "../../db/products.db";
 import { MainProductItem2 } from "./productItem/mainProductItem2";
 import { MainProductItem3 } from "./productItem/mainProductItem3";
 
-export default class MainPage{
+
+export default class MainPage {
   private products: Product[] = PRODUCTS;
+  private productsComponent: MainProductItem2[] = [];
+  constructor() {
+    this.productsComponent = this.products.map((item: Product) => new MainProductItem2(item));
+   // this.addEvents();
+  }
     render() {
       return `<main class="main-page">
         <div class="container">
@@ -148,7 +154,7 @@ export default class MainPage{
               </div>
             </div>
             <div class="all-products__container">
-            ${this.products.map((item: Product) => new MainProductItem2(item)).map((product: MainProductItem2) => product.render()).join('')}
+            ${this.productsComponent.map((product: MainProductItem2) => product.render()).join('')}
             ${this.products.map((item: Product) => new MainProductItem3(item)).map((product: MainProductItem3) => product.render()).join('')}
                
               </div> 
@@ -157,4 +163,16 @@ export default class MainPage{
         </div>
       </main>`;
     }
+    addEvents() {
+      /* let containerList = document.querySelector('.all-products__container');
+      console.log(containerList);
+      if (!containerList) {
+        throw new Error('Button is undefined');
+      }
+      containerList.addEventListener('click', (event) => {
+        console.log('++')
+      })
+       */
+      this.productsComponent.forEach((component) => component.addEvents());
+    };
 };
