@@ -269,7 +269,10 @@
 
 .products-container-3 {
     width: 33%;
-    margin-bottom: 10px;
+    max-height: 180px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 
     h3 {
         font-family: $headers-fonts;
@@ -278,7 +281,7 @@
         font-size: 1.4rem;
         line-height: 1.6rem;
         color: $color-text2;
-        margin: 0;
+        margin: $margit-center;
         margin-bottom: 7px;
         text-align: center;
     }
@@ -286,11 +289,13 @@
 
 .products-container-img-3 {
     width: 90%;
+    height: 50%;
     margin: $margit-center;
     margin-bottom: 10px;
 
     img {
         width: 100%;
+        height: 100%;
         object-fit: contain;
         object-position: center;
     }
