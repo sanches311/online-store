@@ -5,4 +5,5 @@ import { loadLogo } from './components/utils';
 
 initRoute();
 Listen.listenselectBook();
+Listen.listenView();
 loadLogo();
