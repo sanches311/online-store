@@ -1,27 +1,42 @@
-import { getProducts } from "../../db/products.db";
+import { PRODUCTS } from '../../db/products.db';
 
-export default {
-    getBookPageHtml(id: number): string {
-        let html: string = `<main class="product-details-page">
+export default class BookPage {
+    constructor(private id: number) {}
+    getBook() {
+        return PRODUCTS.filter((item) => item.id === this.id)[0];
+    }
+    getBreadCrumbs() {
+        let html = '';
+        const category = this.getBook().category;
+
+        for (const key in category) {
+            if (category[key as keyof typeof category]) {
+                html += `<li class="breadcrumbs__item">${key}</li>`;
+            }
+        }
+        return html;
+    }
+
+    getBookPageHtml(): string {
+        const item = this.getBook();
+        return `<main class="product-details-page">
         <div class="container">
             <div class="breadcrumbs">
                 <ul>
-                    <li class="breadcrumbs__item">Store</li>
-                    <li class="breadcrumbs__item">Laptops</li>
-                    <li class="breadcrumbs__item">Apple</li>
-                    <li class="breadcrumbs__item breadcrumbs__item_active">Macbook pro</li>
+                <a href="/"><li class="breadcrumbs__item">store</li></a>
+                ${this.getBreadCrumbs()}
                 </ul>
             </div>
             <section class="product-info">
                 <div class="carousel">
                     <div class="show-img">
-                        <img src="https://img.freepik.com/free-photo/wide-angle-shot-of-a-single-tree-growing-under-a-clouded-sky-during-a-sunset-surrounded-by-grass_181624-22807.jpg?w=2000"
+                        <img src="${item.imageUrl[0]}"
                             alt="An image of the selected book.">
                     </div>
                     <div class="carousel-img">
                         <div class="carousel-img__item">
                             <img class="item-img"
-                                src="https://mirpozitiva.ru/wp-content/uploads/2019/11/1477469601_nature_gora.jpg"
+                                src="${item.imageUrl[1]}"
                                 alt="Another picture of the book.">
                         </div>
                         <div class="carousel-img__item">
@@ -37,43 +52,33 @@ export default {
                     </div>
                 </div>
                 <div class="description">
-                    <h2 class="description__title">Название книги</h2>
-                    <div class="description__info">Carrots from Tomissy Farm are one of the best on the market.
-                        Tomisso and his family are giving a full love to his Bio products. Tomisso’s carrots are
-                        growing on the fields naturally.</div>
+                    <h2 class="description__title">${item.title}</h2>
+                    <div class="description__info">${item.description}</div>
                     <div class="description__category">
                         <div class="column">
                             <div class="category-item">
-                                <p class="category-item__name">Stock:</p>
-                                <p class="category-item__description">In Stock</p>
+                                <p class="category-item__name">Автор:</p>
+                                <p class="category-item__description">${item.author}</p>
                             </div>
                             <div class="category-item">
-                                <p class="category-item__name">Stock:</p>
-                                <p class="category-item__description">In Stockmm</p>
+                                <p class="category-item__name">Год издания:</p>
+                                <p class="category-item__description">${item.year}</p>
                             </div>
                             <div class="category-item">
-                                <p class="category-item__name">Stock:</p>
-                                <p class="category-item__description">In Stock</p>
+                                <p class="category-item__name">Обложка:</p>
+                                <p class="category-item__description">${item.type}</p>
                             </div>
                         </div>
                         <div class="column">
                             <div class="category-item">
-                                <p class="category-item__name">Stock:</p>
-                                <p class="category-item__description">In Stock</p>
-                            </div>
-                            <div class="category-item">
-                                <p class="category-item__name">Stock:</p>
-                                <p class="category-item__description">In Stock</p>
-                            </div>
-                            <div class="category-item">
-                                <p class="category-item__name">Stock:</p>
-                                <p class="category-item__description">In Stock</p>
+                                <p class="category-item__name">В наличии:</p>
+                                <p class="category-item__description">${item.quantity}</p>
                             </div>
                         </div>
                     </div>
                     <div class="column-3">
                         <div class="description__price">
-                            <p class="price">36.23</p>
+                            <p class="price">${item.price}</p>
                             <p class="currency"> USD</p>
                         </div>
                         <div class="description__button">
@@ -85,6 +90,5 @@ export default {
             </section>
         </div>
     </main>`;
-        return html;
-    },
-};
+    }
+}

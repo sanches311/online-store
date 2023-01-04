@@ -1,12 +1,28 @@
-import { Product } from "../../interfaces/Product";
-import { PRODUCTS} from "../../db/products.db";
-import { MainProductItem2 } from "./productItem/mainProductItem2";
-import { MainProductItem3 } from "./productItem/mainProductItem3";
+import { Product } from '../../interfaces/Product';
+import { PRODUCTS } from '../../db/products.db';
+import { MainProductItem } from './productItem/mainProductItem';
 
-export default class MainPage{
-  private products: Product[] = PRODUCTS;
-    render() {
-      return `<main class="main-page">
+export default class MainPage {
+    private products: Product[] = PRODUCTS;
+
+    getBooksHtml() {
+        const url = new URL(window.location.href);
+        const view = url.searchParams.get('big');
+
+        if (view === 'true' || view === null)
+            return this.products
+                .map((item: Product) => new MainProductItem(item))
+                .map((product: MainProductItem) => product.books2Column())
+                .join('');
+        if (view === 'false')
+            return this.products
+                .map((item: Product) => new MainProductItem(item))
+                .map((product: MainProductItem) => product.books3Column())
+                .join('');
+    }
+
+    getMainPageHtml() {
+        return `<main class="main-page">
         <div class="container">
           <section class="all-filters">
             <div class="all-filters__tasks-button">
@@ -124,14 +140,12 @@ export default class MainPage{
           <section class="all-products">
             <div class="all-products__header">
               <div class="select">
-                <select name="" id="">
-                  <option value="">select</option>
-                  <option value="">1</option>
-                  <option value="">2</option>
-                  <option value="">3</option>
-                  <option value="">4</option>
-                  <option value="">5</option>
-                  <option value="">6</option>
+                <select name="" id="sort">                  
+                  <option selected disabled>Сортировка по</option>
+                  <option value="public-dec">Сначала новые</option>
+                  <option value="public-inc">Сначала старые</option>
+                  <option value="price-dec">Сначала дорогие</option>
+                  <option value="price-inc">Сначала дешевые</option>                                    
                 </select>
               </div>
               <h3>Found: <span class="found">0</span></h3>
@@ -147,14 +161,14 @@ export default class MainPage{
                 </div>
               </div>
             </div>
-            <div class="all-products__container">
-            ${this.products.map((item: Product) => new MainProductItem2(item)).map((product: MainProductItem2) => product.render()).join('')}
-            ${this.products.map((item: Product) => new MainProductItem3(item)).map((product: MainProductItem3) => product.render()).join('')}
-               
+            <div class="all-products__container">       
+            
+            ${this.getBooksHtml()}
+
               </div> 
             </div>
           </section>
         </div>
       </main>`;
     }
-};
+}
