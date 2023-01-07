@@ -2,6 +2,7 @@ import { PRODUCTS } from '../db/products.db';
 import MainPage from './pages/mainPage';
 import { renderProduct } from './view';
 import store from '../store/store';
+import Filter from './pages/filter';
 
 const mainPage = new MainPage();
 
@@ -46,7 +47,8 @@ export default {
                 filter.sort();
                 const html = mainPage.getBooksHtml();
                 renderProduct(html!);
-                mainPage.getSelectOption();
+                localStorage.setItem('sort', sortOpt);
+                mainPage.stateOptions.currentOptions = sortOpt;
             }
         });
     },

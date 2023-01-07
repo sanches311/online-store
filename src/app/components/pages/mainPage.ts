@@ -1,37 +1,44 @@
 import { Product } from '../../interfaces/Product';
-import { PRODUCTS } from '../../db/products.db';
 import { MainProductItem } from './productItem/mainProductItem';
 import store from '../../store/store';
 
+interface Ioptions {
+    options: Array<{ value: string; label: string }>;
+    currentOptions: string;
+}
+
 export default class MainPage {
     private products: Product[] = store.books;
+    public stateOptions: Ioptions = {
+        options: [
+            { value: 'default', label: 'Сортировать по' },
+            { value: 'price-inc', label: 'Сначала дешевые' },
+            { value: 'price-dec', label: 'Сначала дорогие' },
+            { value: 'year-inc', label: 'Сначала старые' },
+            { value: 'year-dec', label: 'Сначала новые' },
+        ],
+        currentOptions: 'default',
+    };
+
     getSelectOption() {
-      const url = new URL(window.location.href);
-      const view = url.searchParams.get('sort');
-
-      const option1 = document.createElement('option');
-      const option2 = document.createElement('option');
-      const option3 = document.createElement('option');
-      const option4 = document.createElement('option');
-      const option5 = document.createElement('option');
-      option2.value = 'year-dec';
-      option2.text = 'Сначала новые';
-      option3.value = 'year-inc';
-      option4.value = 'price-dec';
-      option5.value = 'price-inc';
-      if (view) {
-          console.log(option2.text);
-      }
-
-      return `
-      <select id="sort">                  
-      <option disabled>Сортировка по</option>
-      <option value="year-dec">Сначала новые</option>
-      <option value="year-inc">Сначала старые</option>
-      <option value="price-dec">Сначала дорогие</option>
-      <option value="price-inc">Сначала дешевые</option>                                    
-    </select> `;
-  }
+        const curr = (value: string) => {
+            const sort = localStorage.getItem('sort');
+            if (sort) {
+                this.stateOptions.currentOptions = sort;
+            }
+            if (value === this.stateOptions.currentOptions) {
+                return 'selected';
+            } else return;
+        };
+        return `
+      <select id="sort">
+      ${this.stateOptions.options
+          .map((option) => {
+              return `<option ${curr(option.value)} value='${option.value}'>${option.label}</option>`;
+          })
+          .join('')}
+      </select>`;
+    }
     getBooksHtml() {
         const url = new URL(window.location.href);
         const view = url.searchParams.get('big');
@@ -167,13 +174,7 @@ export default class MainPage {
           <section class="all-products">
             <div class="all-products__header">
               <div class="select">
-                <select name="" id="sort">                  
-                  <option selected disabled>Сортировка по</option>
-                  <option value="public-dec">Сначала новые</option>
-                  <option value="public-inc">Сначала старые</option>
-                  <option value="price-dec">Сначала дорогие</option>
-                  <option value="price-inc">Сначала дешевые</option>                                    
-                </select>
+                ${this.getSelectOption()}
               </div>
               <h3>Found: <span class="found">0</span></h3>
               <div class="search">
@@ -188,10 +189,8 @@ export default class MainPage {
                 </div>
               </div>
             </div>
-            <div class="all-products__container">       
-            
+            <div class="all-products__container">     
             ${this.getBooksHtml()}
-
               </div> 
             </div>
           </section>
