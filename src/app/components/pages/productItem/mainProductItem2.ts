@@ -1,14 +1,14 @@
 import { Product } from "../../../interfaces/Product";
-import localStorageState, { CartProducts, LocalStorageState } from "../../../store/state";
+import localStorageState, { LocalStorageState } from "../../../store/state";
 import { PRODUCTS } from "../../../db/products.db";
 
 export class MainProductItem2 {
  constructor(private item: Product) {
-
+  
  }
  
  private getHtmlId = () => `product_${this.item.id}`;
-  
+ private itemIndex: number = 0;
 
 
   render() {
@@ -50,15 +50,8 @@ export class MainProductItem2 {
       throw new Error('Button is undefined');
     }
     button.addEventListener('click', (event) => {
-      event.preventDefault();
-      let book: CartProducts = {
-        amount: 1,
-        product: PRODUCTS[this.item.id],
-      }
-     
-      console.log(localStorageState.getProducts());
-      localStorageState.putProducts(this.item.id)
-      console.log(localStorageState.getProducts());
+      event.preventDefault();     
+      localStorageState.putProducts(this.item.id);
     });
     
   }

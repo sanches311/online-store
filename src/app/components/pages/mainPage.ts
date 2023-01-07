@@ -9,7 +9,6 @@ export default class MainPage {
   private productsComponent: MainProductItem2[] = [];
   constructor() {
     this.productsComponent = this.products.map((item: Product) => new MainProductItem2(item));
-   // this.addEvents();
   }
     render() {
       return `<main class="main-page">
@@ -130,7 +129,7 @@ export default class MainPage {
           <section class="all-products">
             <div class="all-products__header">
               <div class="select">
-                <select name="" id="">
+                <select name="" id="" class="main-select">
                   <option value="">select</option>
                   <option value="">1</option>
                   <option value="">2</option>

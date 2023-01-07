@@ -1,11 +1,5 @@
 import { Product } from '../interfaces/Product';
 
-export interface CartProducts {
-  
-    amount: number;
-    product: Product;
-
-};
 export class LocalStorageState {
   static getProducts() {
     throw new Error("Method not implemented.");
@@ -29,9 +23,20 @@ export class LocalStorageState {
     } else {
       products.splice(index, 1);
     }
-    
+    localStorage.setItem(this.keyName, JSON.stringify(products));
+  }
+  addProducts(id: number) {
+    let products = this.getProducts();
+    products.push(id);
+    localStorage.setItem(this.keyName, JSON.stringify(products));
+  }
+  deleteProducts(id: number) {
+    let products = this.getProducts();
+    const index = products.indexOf(id);
+    products.splice(index, 1);
     localStorage.setItem(this.keyName, JSON.stringify(products));
   }
 }
 let localStorageState = new LocalStorageState();
 export default localStorageState;
+

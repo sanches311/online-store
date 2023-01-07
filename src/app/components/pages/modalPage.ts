@@ -1,5 +1,32 @@
-{
-  let html: string = ` <div class="modal modal-active" id="modal-window">
+
+export class ModalWindow {
+    constructor() {
+
+    }
+    addEvents(elem: HTMLElement) {
+
+        elem.addEventListener('click', function (e) {
+
+            let modalContainer = document.querySelector('.modal__window');
+            if (!modalContainer) {
+                throw new Error('Div is undefined.')
+            }
+            let withinModal = e.composedPath().includes((<Node>modalContainer));
+            if (!(e.composedPath().includes((<Node>modalContainer)))) {
+                console.log(withinModal);
+                let deleteDiv = document.getElementById('modal-window');
+                if (!deleteDiv) {
+                    throw new Error('Div is undefined.')
+                }
+                deleteDiv.remove();
+                return;
+            }
+
+        })
+    }
+    render() {
+        //this.addEvents();
+        return ` <div class="modal modal-active" id='open-modal'>
   <div class="modal-container">
       <div class="modal__window" role="dialog" aria-modal="true">
           <h2>Personal details</h2>
@@ -57,4 +84,9 @@
   </div>
 </div>`;
 
+    }
+
 }
+
+let modalWindow = new ModalWindow();
+export default modalWindow;
