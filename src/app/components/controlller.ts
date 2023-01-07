@@ -21,6 +21,7 @@ export default {
         document.title = 'online-store cart';
         const cart = await cartPage.render();
         render(cart);
+        cartPage.addEvents();
     },
     notFoundRoute() {
         document.title = 'Not found page';

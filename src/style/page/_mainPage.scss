@@ -306,3 +306,17 @@
         object-position: center;
     }
 }
+.main-select {
+    text-align: center;
+    outline: none;
+    background: #F9F9F9;
+    border: 1px solid #D1D1D1;
+    border-radius: 12px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 1.9rem;
+    color: $color2;
+    padding: 3px;
+}

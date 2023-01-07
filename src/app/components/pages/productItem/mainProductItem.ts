@@ -2,7 +2,8 @@ import { Product } from '../../../interfaces/Product';
 
 export class MainProductItem {
     constructor(private item: Product) {}
-
+    /*Это специальный генератор id для кнопки добавления товара в корзину*/
+    private getHtmlId = () => `product_${this.item.id}`; 
     books2Column() {
         return `
     <div id='${this.item.id}'class="products-container-2">
@@ -29,7 +30,7 @@ export class MainProductItem {
       <span class="main-page-item-price">${this.item.price}</span> USD
     </div>
     <div class="products-container-buttons">
-      <button class="main-page-item-button">add to cart</button>
+      <button class="main-page-item-button" id='${this.getHtmlId()}'>add to cart</button>
       <button id='${this.item.id}' class="main-page-item-button">details</button>
     </div>
     </div>

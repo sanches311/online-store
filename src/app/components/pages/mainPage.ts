@@ -4,7 +4,6 @@ import { MainProductItem } from './productItem/mainProductItem';
 
 export default class MainPage {
     private products: Product[] = PRODUCTS;
-
     getBooksHtml() {
         const url = new URL(window.location.href);
         const view = url.searchParams.get('big');
