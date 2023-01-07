@@ -1,6 +1,7 @@
 import { PRODUCTS } from '../db/products.db';
 import MainPage from './pages/mainPage';
 import { renderProduct } from './view';
+import store from '../store/store';
 
 const mainPage = new MainPage();
 
@@ -30,6 +31,22 @@ export default {
                     window.history.pushState({}, '', url);
                 }
                 renderProduct(html!);
+            }
+        });
+    },
+    listenSort() {
+        document.addEventListener('change', (event) => {
+            const target = event.target as HTMLSelectElement;
+            if (target.closest('#sort')) {
+                const sortOpt = target.options[target.selectedIndex].value;
+                const url = new URL(window.location.href);
+                url.searchParams.set('sort', sortOpt);
+                window.history.pushState({}, '', url);
+                const filter = new Filter(store.books);
+                filter.sort();
+                const html = mainPage.getBooksHtml();
+                renderProduct(html!);
+                mainPage.getSelectOption();
             }
         });
     },

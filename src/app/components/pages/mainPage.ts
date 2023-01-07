@@ -1,9 +1,37 @@
 import { Product } from '../../interfaces/Product';
 import { PRODUCTS } from '../../db/products.db';
 import { MainProductItem } from './productItem/mainProductItem';
+import store from '../../store/store';
 
 export default class MainPage {
-    private products: Product[] = PRODUCTS;
+    private products: Product[] = store.books;
+    getSelectOption() {
+      const url = new URL(window.location.href);
+      const view = url.searchParams.get('sort');
+
+      const option1 = document.createElement('option');
+      const option2 = document.createElement('option');
+      const option3 = document.createElement('option');
+      const option4 = document.createElement('option');
+      const option5 = document.createElement('option');
+      option2.value = 'year-dec';
+      option2.text = 'Сначала новые';
+      option3.value = 'year-inc';
+      option4.value = 'price-dec';
+      option5.value = 'price-inc';
+      if (view) {
+          console.log(option2.text);
+      }
+
+      return `
+      <select id="sort">                  
+      <option disabled>Сортировка по</option>
+      <option value="year-dec">Сначала новые</option>
+      <option value="year-inc">Сначала старые</option>
+      <option value="price-dec">Сначала дорогие</option>
+      <option value="price-inc">Сначала дешевые</option>                                    
+    </select> `;
+  }
     getBooksHtml() {
         const url = new URL(window.location.href);
         const view = url.searchParams.get('big');
