@@ -1,23 +1,82 @@
-import { Product } from '../../interfaces/Product';
 import { PRODUCTS } from '../../db/products.db';
+import { Product } from '../../interfaces/Product';
 import { MainProductItem } from './productItem/mainProductItem';
+import store from '../../store/store';
+import Filter from './filter';
+
+interface Ioptions {
+    options: Array<{ value: string; label: string }>;
+    currentOptions: string;
+}
 
 export default class MainPage {
-    private products: Product[] = PRODUCTS;
+    private products: Product[] = store.books;
+    public stateOptions: Ioptions = {
+        options: [
+            { value: 'default', label: 'Сортировать по' },
+            { value: 'price-inc', label: 'Сначала дешевые' },
+            { value: 'price-dec', label: 'Сначала дорогие' },
+            { value: 'year-inc', label: 'Сначала старые' },
+            { value: 'year-dec', label: 'Сначала новые' },
+        ],
+        currentOptions: 'default',
+    };
+
+    getSelectOption() {
+        const curr = (value: string) => {
+            const url = new URL(window.location.href);
+            const sort = url.searchParams.get('sort');
+            if (sort) {
+                this.stateOptions.currentOptions = sort;
+            }
+            if (value === this.stateOptions.currentOptions) {
+                return 'selected';
+            } else return;
+        };
+        const filter = new Filter(PRODUCTS);
+        filter.sort();
+        return `
+      <select id="sort">
+      ${this.stateOptions.options
+          .map((option) => {
+              return `<option ${curr(option.value)} value='${option.value}'>${option.label}</option>`;
+          })
+          .join('')}
+      </select>`;
+    }
     getBooksHtml() {
         const url = new URL(window.location.href);
         const view = url.searchParams.get('big');
+        const filter = new Filter(store.books);
+
+        filter.sort();
+        filter.liveSearch();
 
         if (view === 'true' || view === null)
-            return this.products
+            return store.books
                 .map((item: Product) => new MainProductItem(item))
                 .map((product: MainProductItem) => product.books2Column())
                 .join('');
         if (view === 'false')
-            return this.products
+            return store.books
                 .map((item: Product) => new MainProductItem(item))
                 .map((product: MainProductItem) => product.books3Column())
                 .join('');
+    }
+    getBooksCount() {
+        const belAll = PRODUCTS.filter(function (book) {
+            if (book.category.belorussian) return book;
+        }).length;
+        const belCurr = store.books.filter(function (book) {
+            if (book.category.belorussian) return book;
+        }).length;
+
+        return {
+            belorussian: {
+                countAll: belAll,
+                countCurr: belCurr,
+            },
+        };
     }
 
     getMainPageHtml() {
@@ -34,7 +93,9 @@ export default class MainPage {
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Книги на белорусском языке</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-bel-count'class="filter-matching">${this.getBooksCount().belorussian.countAll}/ ${
+            this.getBooksCount().belorussian.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
@@ -139,17 +200,11 @@ export default class MainPage {
           <section class="all-products">
             <div class="all-products__header">
               <div class="select">
-                <select name="" id="sort">                  
-                  <option selected disabled>Сортировка по</option>
-                  <option value="public-dec">Сначала новые</option>
-                  <option value="public-inc">Сначала старые</option>
-                  <option value="price-dec">Сначала дорогие</option>
-                  <option value="price-inc">Сначала дешевые</option>                                    
-                </select>
+                ${this.getSelectOption()}
               </div>
-              <h3>Found: <span class="found">0</span></h3>
+              <h3>Found: <span class="found">${store.books.length}</span></h3>
               <div class="search">
-                <input type="text">
+                <input id='live-search' type="text">
               </div>
               <div class="display">
                 <div class="col-2">
@@ -160,10 +215,8 @@ export default class MainPage {
                 </div>
               </div>
             </div>
-            <div class="all-products__container">       
-            
+            <div class="all-products__container">     
             ${this.getBooksHtml()}
-
               </div> 
             </div>
           </section>
