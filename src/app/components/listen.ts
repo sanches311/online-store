@@ -56,6 +56,8 @@ export default {
                 const mainPage = new MainPage();
                 const html = mainPage.getMainPageHtml();
                 render(html!);
+                renderBooksCount();
+                renderBooksFilterCount();
             },
             false
         );
