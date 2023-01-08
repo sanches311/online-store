@@ -1,12 +1,10 @@
-
 export class ModalWindow {
     constructor() {
-
+       
     }
     addEvents(elem: HTMLElement) {
 
         elem.addEventListener('click', function (e) {
-
             let modalContainer = document.querySelector('.modal__window');
             if (!modalContainer) {
                 throw new Error('Div is undefined.')
@@ -21,11 +19,11 @@ export class ModalWindow {
                 deleteDiv.remove();
                 return;
             }
-
         })
+        
     }
     render() {
-        //this.addEvents();
+       
         return ` <div class="modal modal-active" id='open-modal'>
   <div class="modal-container">
       <div class="modal__window" role="dialog" aria-modal="true">
@@ -33,19 +31,19 @@ export class ModalWindow {
           <form action="" class="form">
               <div class="form__field">
                   <label for="">First Name</label>
-                  <input type="text" placeholder="First Name">
+                  <input type="text" placeholder="First Name" id="input-first-name">
               </div>
               <div class="form__field">
                   <label for="">Phone number</label>
-                  <input type="number" placeholder="Phone number">
+                  <input type="tel" placeholder="Phone number" id="input-phone">
               </div>
               <div class="form__field">
                   <label for="">Delivery Address</label>
-                  <input type="text" placeholder="Delivery Address">
+                  <input type="text" placeholder="Delivery Address" id="input-adress">
               </div>
               <div class="form__field">
                   <label for="">Email address</label>
-                  <input type="text" placeholder="Email address">
+                  <input type="email" placeholder="Email address" id="input-mail">
               </div>
               <div class="form__card">
                   <h3>Credit card details</h3>

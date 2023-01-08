@@ -6,6 +6,7 @@ import modalWindow, { ModalWindow } from "./modalPage";
 import header from "./componentsClasses/header";
 import cartSummary from "./componentsClasses/cartSummary";
 import promoCode from "./componentsClasses/promoCode";
+import modal from "./componentsClasses/modal";
 
 export default class Cart {
   private products: Product[] = [];
@@ -218,6 +219,7 @@ export default class Cart {
 
       container.append(elemModal);
       modalWindow.addEvents(elemModal);
+      modal.addEvents();
 
     })
     document.addEventListener("DOMContentLoaded", function () {
