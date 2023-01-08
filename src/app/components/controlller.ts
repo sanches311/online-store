@@ -5,10 +5,10 @@ import Cart from './pages/cartPage';
 import BookPage from './pages/bookPage';
 
 const cartPage = new Cart();
-const mainPage = new MainPage();
 
 export default {
     async startRoute(): Promise<void> {
+        const mainPage = new MainPage();
         const mainPageHtml = await mainPage.getMainPageHtml();
         render(mainPageHtml);
     },

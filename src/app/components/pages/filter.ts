@@ -1,5 +1,6 @@
 import { Product } from '../../interfaces/Product';
 import store from '../../store/store';
+import { PRODUCTS } from '../../db/products.db';
 
 export default class Filter {
     constructor(private books: Array<Product>) {}
@@ -21,5 +22,16 @@ export default class Filter {
                 }
             }
         }
+    }
+    liveSearch() {
+        const url = new URL(window.location.href);
+        const search = url.searchParams.get('search');
+        if (search) {
+            store.books = this.books.filter(function (book) {
+                return (
+                    book.author.indexOf(search) > 0 || book.title.indexOf(search) > 0 || book.type.indexOf(search) > 0
+                );
+            });
+        } else store.books = PRODUCTS;
     }
 }

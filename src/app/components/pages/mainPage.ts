@@ -1,6 +1,8 @@
+import { PRODUCTS } from '../../db/products.db';
 import { Product } from '../../interfaces/Product';
 import { MainProductItem } from './productItem/mainProductItem';
 import store from '../../store/store';
+import Filter from './filter';
 
 interface Ioptions {
     options: Array<{ value: string; label: string }>;
@@ -22,7 +24,8 @@ export default class MainPage {
 
     getSelectOption() {
         const curr = (value: string) => {
-            const sort = localStorage.getItem('sort');
+            const url = new URL(window.location.href);
+            const sort = url.searchParams.get('sort');
             if (sort) {
                 this.stateOptions.currentOptions = sort;
             }
@@ -30,6 +33,8 @@ export default class MainPage {
                 return 'selected';
             } else return;
         };
+        const filter = new Filter(PRODUCTS);
+        filter.sort();
         return `
       <select id="sort">
       ${this.stateOptions.options
@@ -42,17 +47,36 @@ export default class MainPage {
     getBooksHtml() {
         const url = new URL(window.location.href);
         const view = url.searchParams.get('big');
+        const filter = new Filter(store.books);
+
+        filter.sort();
+        filter.liveSearch();
 
         if (view === 'true' || view === null)
-            return this.products
+            return store.books
                 .map((item: Product) => new MainProductItem(item))
                 .map((product: MainProductItem) => product.books2Column())
                 .join('');
         if (view === 'false')
-            return this.products
+            return store.books
                 .map((item: Product) => new MainProductItem(item))
                 .map((product: MainProductItem) => product.books3Column())
                 .join('');
+    }
+    getBooksCount() {
+        const belAll = PRODUCTS.filter(function (book) {
+            if (book.category.belorussian) return book;
+        }).length;
+        const belCurr = store.books.filter(function (book) {
+            if (book.category.belorussian) return book;
+        }).length;
+
+        return {
+            belorussian: {
+                countAll: belAll,
+                countCurr: belCurr,
+            },
+        };
     }
 
     getMainPageHtml() {
@@ -69,7 +93,9 @@ export default class MainPage {
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Книги на белорусском языке</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-bel-count'class="filter-matching">${this.getBooksCount().belorussian.countAll}/ ${
+            this.getBooksCount().belorussian.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
@@ -176,9 +202,9 @@ export default class MainPage {
               <div class="select">
                 ${this.getSelectOption()}
               </div>
-              <h3>Found: <span class="found">0</span></h3>
+              <h3>Found: <span class="found">${store.books.length}</span></h3>
               <div class="search">
-                <input type="text">
+                <input id='live-search' type="text">
               </div>
               <div class="display">
                 <div class="col-2">
