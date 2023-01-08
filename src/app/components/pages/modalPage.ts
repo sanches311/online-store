@@ -1,3 +1,4 @@
+import cardImg from '../../../assets/img/modal-window/card.png';
 export class ModalWindow {
     constructor() {
        
@@ -30,19 +31,19 @@ export class ModalWindow {
           <h2>Personal details</h2>
           <form action="" class="form">
               <div class="form__field">
-                  <label for="">First Name</label>
+                  <label for="input-first-name">First Name</label>
                   <input type="text" placeholder="First Name" id="input-first-name">
               </div>
               <div class="form__field">
-                  <label for="">Phone number</label>
+                  <label for="input-phone">Phone number</label>
                   <input type="tel" placeholder="Phone number" id="input-phone">
               </div>
               <div class="form__field">
-                  <label for="">Delivery Address</label>
+                  <label for="input-adress">Delivery Address</label>
                   <input type="text" placeholder="Delivery Address" id="input-adress">
               </div>
               <div class="form__field">
-                  <label for="">Email address</label>
+                  <label for="input-mail">Email address</label>
                   <input type="email" placeholder="Email address" id="input-mail">
               </div>
               <div class="form__card">
@@ -50,32 +51,28 @@ export class ModalWindow {
                   <div class="card-details">
                       <div class="two-field">
                           <div class="card-details__icons">
-                              <img src="../../../assets/img/modal-window/mastercard.png" alt="Card">
+                              <img src="${cardImg}" alt="Card" id="modal-card-img">
                           </div>
                           <div class="card-details__number">
-                              <label for="">Card number</label>
-                              <input type="number" placeholder="Card number">
+                              <label for="input-card">Card number</label>
+                              <input type="text" placeholder="Card number" id="input-card">
                           </div>
                       </div>
                       <div class="two-field">
                           <div class="card-details__valid">
-                              <label for="">Expiration date</label>
-                              <input type="date">
+                              <label for="input-thru">Expiration date</label>
+                              <input type="text" id="input-thru" placeholder="Card thru">
                           </div>
                           <div class="card-details__valid">
-                              <label for="">CVC</label>
-                              <input type="number" placeholder="CVC">
+                              <label for="input-cvv">CVC</label>
+                              <input type="text" placeholder="CVC" id="input-cvv">
                           </div>
                       </div>
                   </div>
               </div>
-              <div class="form__attention">
-                  <p class="error">Card number - ERROR</p>
-                  <p class="error">Card expiration date - ERROR</p>
-                  <p class="error">Card CVC - ERROR</p>
-              </div>
+              <div class="form__attention display-error"></div>
               <div class="form__button">
-                  <button type="submit">confirm</button>
+                  <button type="submit" id="modal-confirm">confirm</button>
               </div>
           </form>
       </div>

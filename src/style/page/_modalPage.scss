@@ -15,6 +15,7 @@
   align-items: center;
   z-index: 99;
   padding: 30px 0;
+  background-color: rgba(0, 0, 0, .2);
 
   &__window {
     width: 670px;
@@ -30,6 +31,10 @@
     overflow: visible;
     transition: transform 0.2s ease 0s, opacity 0.2s ease 0s;
     transform: scale(0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     h2 {
       width: 40%;
@@ -164,6 +169,18 @@
       color: $color-text2;
       text-transform: uppercase;
     }
+
+    button:hover {
+      background-color: $color-text1;
+      box-shadow: 0 0 0 1px #cbd6ee;
+      color: $color3;
+      cursor: pointer;
+    }
+    
+   button:focus {
+      border-color: $color2;
+      cursor: pointer;
+    }
   }
 }
 
@@ -290,4 +307,8 @@ input[type=email].text-field__input-valid {
 .text-field__input-valid:focus {
   border-color: #198754;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 25%);
+}
+
+.display-error {
+  display: none;
 }
