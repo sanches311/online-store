@@ -12,7 +12,6 @@ export class ModalWindow {
             }
             let withinModal = e.composedPath().includes((<Node>modalContainer));
             if (!(e.composedPath().includes((<Node>modalContainer)))) {
-                console.log(withinModal);
                 let deleteDiv = document.getElementById('modal-window');
                 if (!deleteDiv) {
                     throw new Error('Div is undefined.')
@@ -84,4 +83,5 @@ export class ModalWindow {
 }
 
 let modalWindow = new ModalWindow();
+
 export default modalWindow;

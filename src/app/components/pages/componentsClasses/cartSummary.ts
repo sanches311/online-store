@@ -21,14 +21,14 @@ class CartSummary {
     if (!summaryPrice) {
       throw new Error('Summary prise is undefined');
     }
-    summaryPrice.innerHTML = `${price}`;
+    summaryPrice.innerHTML = `${price.toFixed(2)}`;
   }
   chandePrice(price: number) {
     const summaryPrice = document.getElementById('summary-price');
     if (!summaryPrice) {
       throw new Error('Summary prise is undefined');
     }
-    summaryPrice.innerHTML = `${price}`;
+    summaryPrice.innerHTML = `${price.toFixed(2)}`;
   }
 }
 const cartSummary = new CartSummary();

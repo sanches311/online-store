@@ -1,8 +1,12 @@
 import { PRODUCTS } from '../../db/products.db';
+import { Product } from '../../interfaces/Product';
+import localStorageState from '../../store/state';
+import Cart from './cartPage';
+import header from './componentsClasses/header';
 
 export default class BookPage {
     constructor(private id: number) {
-        this.addEvents();
+        this.addEvents(this.getBook());
     }
     getBook() {
         return PRODUCTS.filter((item) => item.id === this.id)[0];
@@ -80,8 +84,8 @@ export default class BookPage {
                             <p class="currency"> USD</p>
                         </div>
                         <div class="description__button">
-                            <button class="description-add">Add to cart</button>
-                            <button class="description-buy">Buy now</button>
+                            <button class="description-add" id='item_${item.id}'>${localStorageState.getProducts().indexOf(item.id) == -1 ? 'Add to cart' : 'In the cart'}</button>
+                            <button class="description-buy" id='buy_${item.id}'>Buy now</button>
                         </div>
                     </div>
                 </div>
@@ -89,7 +93,7 @@ export default class BookPage {
         </div>
     </main>`;
     }
-    addEvents() {
+    addEvents(_item?: Product | undefined) {
         const imgItems = Array.from(document.querySelectorAll('.item-img'));
         const mainImg = document.getElementById('main-product-img');
 
@@ -103,6 +107,44 @@ export default class BookPage {
             })
         }
 
+        const descriptionAdd = document.querySelector('.description-add');
+        descriptionAdd?.addEventListener('click', function(e) {
+            const target = e.target as HTMLElement;
+           checkCart(Number(target.id.substring(5)));
+        })
+        function checkCart(id: number) {
+            let cart = localStorageState.getProducts();
+            if (cart.indexOf(id) != -1) {
+                descriptionAdd!.innerHTML = 'Add to cart';
+                localStorageState.deleteProducts(id);
+                header.changeMainHeader();
+                console.log(localStorageState.getProducts())
+            } else {
+                descriptionAdd!.innerHTML = 'In the cart';
+                localStorageState.putProducts(id);
+                header.changeMainHeader();
+                console.log(localStorageState.getProducts())
+            }
+        }
+
+        const descriptionBuy = document.querySelector('.description-buy');
+        descriptionBuy?.addEventListener('click', function(e) {
+            const target = e.target as HTMLElement;
+           checkBuy(Number(target.id.substring(4)));
+        })
+
+        function checkBuy(id: number) {
+            let cart = localStorageState.getProducts();
+        
+            if (cart.indexOf(id) == -1) {
+                localStorageState.putProducts(id);
+                header.changeMainHeader();
+            }
+            const windowPast =  window.location.hash;
+            const cartPage = new Cart();
+           cartPage.showModal(windowPast);
+              window.location.href = '/#cart';
+        }
 
     }
 }

@@ -2,14 +2,14 @@ import { Product } from "../../interfaces/Product";
 import { PRODUCTS } from "../../db/products.db";
 import { ProductItem } from "./productItem/productItem";
 import localStorageState from "../../store/state";
-import modalWindow from "./modalPage";
+import modalWindow, { ModalWindow } from "./modalPage";
 import header from "./componentsClasses/header";
 import promoCode from "./componentsClasses/promoCode";
 import modal from "./componentsClasses/modal";
 
 export default class Cart {
   private products: Product[] = [];
-  private productStore = localStorageState.getProducts();
+  
   private productsComponent: ProductItem[] = [];
   private productsPages: ProductItem[] = [];
   private amount: number = 0;
@@ -21,8 +21,9 @@ export default class Cart {
 
   }
   createProductsComponent() {
+    let productStore = localStorageState.getProducts();
     PRODUCTS.forEach(({ id }) => {
-      if (this.productStore.indexOf(id) !== -1) {
+      if (productStore.indexOf(id) !== -1) {
         this.products.push(PRODUCTS[id]);
       }
     })
@@ -47,7 +48,6 @@ export default class Cart {
 
       const target = e.target as HTMLInputElement;
       const url = new URL(window.location.href);
-
       const idBook = target.value;
       url.hash = `cart/?limit=${idBook}`;
       window.history.pushState({}, '', url);
@@ -159,7 +159,7 @@ export default class Cart {
               </div>
             </div>
             <div class="products-container">
-            ${this.productsComponent.map((product: ProductItem) => product.render()).join('')}
+            ${this.productsComponent.length > 0 ? this.productsComponent.map((product: ProductItem) => product.render()).join('') : `<h3 class="products__title">Cart is empty</h3>`}
             </div>
           </section>
           <section class="summary">
@@ -197,12 +197,34 @@ export default class Cart {
         </div>
       </main>`;
   }
+  showModal(windowHash: string) {
+    if(window.location.hash === windowHash) {
+      let modalWindow = new ModalWindow();
+      
+      let elemModal = document.createElement('div');
+      elemModal.classList.add('modal');
+      elemModal.classList.add('modal-active');
+      elemModal.id = 'modal-window';
+      elemModal.innerHTML = modalWindow.render();
+      const container = document.getElementById('container');
+      console.log(container)
+      if (!container) {
+        throw new Error('Container is undefined');
+      }
+
+      container.append(elemModal);
+      modalWindow.addEvents(elemModal);
+      modal.addEvents();
+   }
+  }
   addEvents() {
     this.productsComponent.forEach((compotent) => compotent.addEvents());
     const button = document.getElementById('open-modal-window');
     if (!button) {
       throw new Error('Button is undefined');
     }
+
+    
     button.addEventListener('click', function (e) {
       e.preventDefault();
       let elemModal = document.createElement('div');
@@ -220,9 +242,9 @@ export default class Cart {
       modal.addEvents();
 
     })
+   
     document.addEventListener("DOMContentLoaded", function () {
       promoCode.checkInputPromoCode();
-
     });
     this.createComponentRender();
 

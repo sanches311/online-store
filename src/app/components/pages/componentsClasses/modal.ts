@@ -2,6 +2,7 @@ import belCard from '../../../../assets/img/modal-window/bel.png';
 import masterCard from '../../../../assets/img/modal-window/mastercard.png';
 import visaCard from '../../../../assets/img/modal-window/visa.jpg';
 import cardImg from '../../../../assets/img/modal-window/card.png';
+import localStorageState from '../../../store/state';
 
 class Modal {
   private confirm: string[] = [];
@@ -13,10 +14,10 @@ class Modal {
     this.validationMail(this.confirm, this.error);
     this.validationAdress(this.confirm, this.error);
     this.validationCard(this.confirm, this.error);
-    this.validationThru(this.confirm, this.error); 
+    this.validationThru(this.confirm, this.error);
     this.validationCVV(this.confirm, this.error);
     this.validationConfirm(this.confirm, this.error);
-    
+
   }
 
 
@@ -165,7 +166,7 @@ class Modal {
     }
 
     input.addEventListener('input', function (e) {
-      
+
       input.value = input.value.replace(/[^\d]/g, '').substring(0, 16);
       checkInput(input.value);
     });
@@ -207,7 +208,7 @@ class Modal {
   }
 
   validationThru(confirm: string[], stringError: string[]) {
-    
+
     let input = (<HTMLInputElement>document.getElementById('input-thru'));
     if (input.value == '') {
       stringError.push(`${input.id}`);
@@ -251,7 +252,7 @@ class Modal {
   }
 
   validationCVV(confirm: string[], stringError: string[]) {
-  
+
     let input = (<HTMLInputElement>document.getElementById('input-cvv'));
     if (input.value == '') {
       stringError.push(`${input.id}`);
@@ -291,28 +292,28 @@ class Modal {
   validationConfirm(confirm: string[], stringError: string[]) {
     let buttonConfirm = document.getElementById('modal-confirm');
     let errorContainer = document.querySelector('.form__attention');
-    function showMessage() {
-      let modalWindow = document.querySelector('.modal__window');
-      modalWindow!.innerHTML = '<h2 class="modal-message">Order successfully completed</h2>';
-    }
     buttonConfirm?.addEventListener('click', function (e) {
-      console.log(confirm);
-      console.log(stringError);
       if (confirm.length != 7) {
         errorContainer?.classList.remove('display-error');
-
-        let errorP = stringError.reduce((newArr: string, elem: string) => {
+          let errorP = stringError.reduce((newArr: string, elem: string) => {
           let label = document.querySelector(`[for="${elem}"]`);
-    let labelText: string = label?.textContent!;
+          let labelText: string = label?.textContent!;
           return newArr += `<p class="error">${labelText}- ERROR</p>`;
         }, '')
         errorContainer!.innerHTML = `${errorP}`;
 
       } else if (confirm.length == 7 && stringError.length == 0) {
         errorContainer!.classList.add('display-error');
-        setTimeout(showMessage, 3000);
+        let modalWindow = document.querySelector('.modal__window');
+        modalWindow!.innerHTML = '<h2 class="modal-message">Order successfully completed</h2>';
+        setTimeout(() => {
+          window.location.href = '/';
+          localStorage.clear();
+        }, 5000); 
+       
+        
       }
-      
+
     })
 
   }
