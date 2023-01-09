@@ -12,5 +12,6 @@ Listen.listenView();
 listen.listenSort();
 listen.listenBack();
 listen.listenLiveSearch();
-
-
+listen.listenFilterCategory();
+listen.listenFilterQuantity();
+Listen.listenFilterType();
