@@ -83,4 +83,87 @@ export default {
             }
         });
     },
+    listenFilterCategory() {
+        document.addEventListener('click', async (event) => {
+            const target = event.target as HTMLElement;
+            const url = new URL(window.location.href);
+            if (target.closest('.category-book')) {
+                url.searchParams.delete('category');
+                window.history.pushState({}, '', url);
+                const categories = document.querySelectorAll('.category-book');
+                for (let i = 0; i < categories.length; i += 1) {
+                    const query = categories[i].getAttribute('name');
+                    if (categories[i].closest('input:checked')) {
+                        if (query) {
+                            url.searchParams.append('category', query);
+                            window.history.pushState({}, '', url);
+                        }
+                    }
+                }
+            }
+            const filter = new Filter(store.books);
+            filter.filterCategory();
+            const mainPage = new MainPage();
+            const html = mainPage.getBooksHtml();
+            renderProduct(html!);
+            renderBooksCount();
+            renderBooksFilterCount();
+        });
+    },
+    listenFilterQuantity() {
+        document.addEventListener('click', async (event) => {
+            const target = event.target as HTMLElement;
+            const url = new URL(window.location.href);
+
+            if (target.closest('.quantity-book')) {
+                url.searchParams.delete('quantity');
+                window.history.pushState({}, '', url);
+                const categories = document.querySelectorAll('.quantity-book');
+                for (let i = 0; i < categories.length; i += 1) {
+                    const query = categories[i].getAttribute('name');
+                    if (categories[i].closest('input:checked')) {
+                        if (query) {
+                            url.searchParams.append('quantity', query);
+                            window.history.pushState({}, '', url);
+                        }
+                    }
+                }
+            }
+            const filter = new Filter(store.books);
+            filter.filterQuantity();
+            const mainPage = new MainPage();
+            const html = mainPage.getBooksHtml();
+            renderProduct(html!);
+            renderBooksCount();
+            renderBooksFilterCount();
+        });
+    },
+    listenFilterType() {
+        document.addEventListener('click', async (event) => {
+            const target = event.target as HTMLElement;
+            const url = new URL(window.location.href);
+
+            if (target.closest('.type-book')) {
+                url.searchParams.delete('type');
+                window.history.pushState({}, '', url);
+                const categories = document.querySelectorAll('.type-book');
+                for (let i = 0; i < categories.length; i += 1) {
+                    const query = categories[i].getAttribute('name');
+                    if (categories[i].closest('input:checked')) {
+                        if (query) {
+                            url.searchParams.append('type', query);
+                            window.history.pushState({}, '', url);
+                        }
+                    }
+                }
+            }
+            const filter = new Filter(store.books);
+            filter.filterType();
+            const mainPage = new MainPage();
+            const html = mainPage.getBooksHtml();
+            renderProduct(html!);
+            renderBooksCount();
+            renderBooksFilterCount();
+        });
+    },
 };

@@ -15,5 +15,3 @@ listen.listenBack();
 listen.listenLiveSearch();
 
 header.changeMainHeader();
-
-
