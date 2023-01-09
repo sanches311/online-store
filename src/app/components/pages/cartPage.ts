@@ -5,8 +5,7 @@ import localStorageState from "../../store/state";
 import modalWindow from "./modalPage";
 import header from "./componentsClasses/header";
 import promoCode from "./componentsClasses/promoCode";
-import { MainProductItem } from "./productItem/mainProductItem";
-import { render } from "../view";
+import modal from "./componentsClasses/modal";
 
 export default class Cart {
   private products: Product[] = [];
@@ -218,6 +217,7 @@ export default class Cart {
 
       container.append(elemModal);
       modalWindow.addEvents(elemModal);
+      modal.addEvents();
 
     })
     document.addEventListener("DOMContentLoaded", function () {

@@ -70,11 +70,123 @@ export default class MainPage {
         const belCurr = store.books.filter(function (book) {
             if (book.category.belorussian) return book;
         }).length;
+        const forAll = PRODUCTS.filter(function (book) {
+            if (book.category.foreign) return book;
+        }).length;
+        const forCurr = store.books.filter(function (book) {
+            if (book.category.foreign) return book;
+        }).length;
+        const compAll = PRODUCTS.filter(function (book) {
+            if (book.category.computer) return book;
+        }).length;
+        const compCurr = store.books.filter(function (book) {
+            if (book.category.computer) return book;
+        }).length;
+        const sciAll = PRODUCTS.filter(function (book) {
+            if (book.category.scientific) return book;
+        }).length;
+        const sciCurr = store.books.filter(function (book) {
+            if (book.category.scientific) return book;
+        }).length;
+        const artAll = PRODUCTS.filter(function (book) {
+            if (book.category.artistic) return book;
+        }).length;
+        const artCurr = store.books.filter(function (book) {
+            if (book.category.artistic) return book;
+        }).length;
+        const busAll = PRODUCTS.filter(function (book) {
+            if (book.category.business) return book;
+        }).length;
+        const busCurr = store.books.filter(function (book) {
+            if (book.category.business) return book;
+        }).length;
+        const chilAll = PRODUCTS.filter(function (book) {
+            if (book.category.children) return book;
+        }).length;
+        const chilCurr = store.books.filter(function (book) {
+            if (book.category.children) return book;
+        }).length;
+        const stokAll = PRODUCTS.filter(function (book) {
+            if (typeof book.quantity === 'number') return book;
+        }).length;
+        const stokCurr = store.books.filter(function (book) {
+            if (typeof book.quantity === 'number') return book;
+        }).length;
+        const stokOrderAll = PRODUCTS.filter(function (book) {
+            if (book.quantity === 'Под заказ') return book;
+        }).length;
+        const stokOrderCurr = store.books.filter(function (book) {
+            if (book.quantity === 'Под заказ') return book;
+        }).length;
+        const stokNoAll = PRODUCTS.filter(function (book) {
+            if (book.quantity === 'Под заказ') return book;
+        }).length;
+        const stokNoCurr = store.books.filter(function (book) {
+            if (book.quantity === 'Под заказ') return book;
+        }).length;
+        const countSoftAll = PRODUCTS.filter(function (book) {
+            if (book.type === 'Мягкий переплёт') return book;
+        }).length;
+        const countSoftCurr = store.books.filter(function (book) {
+            if (book.type === 'Мягкий переплёт') return book;
+        }).length;
+        const countHardAll = PRODUCTS.filter(function (book) {
+            if (book.type === 'Твердый переплёт') return book;
+        }).length;
+        const countHardCurr = store.books.filter(function (book) {
+            if (book.type === 'Твердый переплёт') return book;
+        }).length;
+        const countIntAll = PRODUCTS.filter(function (book) {
+            if (book.type === 'Интегральный переплёт') return book;
+        }).length;
+        const countIntCurr = store.books.filter(function (book) {
+            if (book.type === 'Интегральный переплёт') return book;
+        }).length;
 
         return {
             belorussian: {
                 countAll: belAll,
                 countCurr: belCurr,
+            },
+            foreign: {
+                countAll: forAll,
+                countCurr: forCurr,
+            },
+            computer: {
+                countAll: compAll,
+                countCurr: compCurr,
+            },
+            scientific: {
+                countAll: sciAll,
+                countCurr: sciCurr,
+            },
+            artistic: {
+                countAll: artAll,
+                countCurr: artCurr,
+            },
+            business: {
+                countAll: busAll,
+                countCurr: busCurr,
+            },
+            children: {
+                countAll: chilAll,
+                countCurr: chilCurr,
+            },
+            stok: {
+                countAll: stokAll,
+                countCurr: stokCurr,
+                countOrderAll: stokOrderAll,
+                countOrderCurr: stokOrderCurr,
+                countNoAll: stokNoAll,
+                countNoCurr: stokNoCurr,
+            },
+            type: {
+                countSoftAll: countSoftAll,
+                countSoftCurr: countSoftCurr,
+                countHardAll: countHardAll,
+                countHardCurr: countHardCurr,
+                countIntAll: countIntAll,
+                countIntCurr: countIntCurr,
             },
         };
     }
@@ -100,38 +212,44 @@ export default class MainPage {
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Иностранная литература</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-for-count' class="filter-matching">${this.getBooksCount().foreign.countAll}/ ${
+            this.getBooksCount().foreign.countCurr
+        } </div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Компьютерная литература</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-comp-count' class="filter-matching">${this.getBooksCount().computer.countAll}/ ${
+            this.getBooksCount().computer.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Научная литература</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-sci-count' class="filter-matching">${this.getBooksCount().scientific.countAll}/ ${
+            this.getBooksCount().scientific.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Художественная литература</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-art-count' class="filter-matching">${this.getBooksCount().artistic.countAll}/ ${
+            this.getBooksCount().artistic.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Бизнес литература</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-bus-count' class="filter-matching">${this.getBooksCount().business.countAll}/ ${
+            this.getBooksCount().business.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Детская литература</p>
-                  <div class="filter-matching">5/5</div>
-                </li>
-                <li class="categoty__item">
-                  <input type="checkbox">
-                  <p>Искусство</p>
-                  <div class="filter-matching">5/5</div>
-                </li>
+                  <div id='filter-chil-count' class="filter-matching">${this.getBooksCount().children.countAll}/ ${
+            this.getBooksCount().children.countCurr
+        }</div>                
               </ul>
             </div>
             <div class="all-filters__category">
@@ -140,17 +258,23 @@ export default class MainPage {
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>На складе</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-stok-count' class="filter-matching">${this.getBooksCount().stok.countAll}/ ${
+            this.getBooksCount().stok.countCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Под заказ</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-stokOrd-count' class="filter-matching">${this.getBooksCount().stok.countOrderAll}/ ${
+            this.getBooksCount().stok.countOrderCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Нет в наличии</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-stokNoOrd-count' class="filter-matching">${this.getBooksCount().stok.countNoAll}/ ${
+            this.getBooksCount().stok.countNoCurr
+        }</div>
                 </li>
               </ul>
             </div>
@@ -160,17 +284,23 @@ export default class MainPage {
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Мягкая обложка</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-soft-count' class="filter-matching">${this.getBooksCount().type.countSoftAll}/ ${
+            this.getBooksCount().type.countSoftCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Твёрдый переплёт</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-hard-count' class="filter-matching">${this.getBooksCount().type.countHardAll}/ ${
+            this.getBooksCount().type.countHardCurr
+        }</div>
                 </li>
                 <li class="categoty__item">
                   <input type="checkbox">
                   <p>Интегральный переплёт</p>
-                  <div class="filter-matching">5/5</div>
+                  <div id='filter-int-count' class="filter-matching">${this.getBooksCount().type.countIntAll}/ ${
+            this.getBooksCount().type.countIntCurr
+        }</div>
                 </li>
               </ul>
             </div>
