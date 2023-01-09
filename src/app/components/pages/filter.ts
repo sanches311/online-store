@@ -34,4 +34,50 @@ export default class Filter {
             });
         } else store.books = PRODUCTS;
     }
+    filterCategory() {
+        const url = new URL(window.location.href);
+        const category = url.searchParams.getAll('category');
+        if (category.length) {
+            category.forEach((value) => {
+                store.books = this.books.filter(function (item: Product) {
+                    if (
+                        value === 'artistic' ||
+                        value === 'belorussian' ||
+                        value === 'business' ||
+                        value === 'children' ||
+                        value === 'computer' ||
+                        value === 'foreign' ||
+                        value === 'scientific'
+                    )
+                        return item.category[value] === true;
+                });
+            });
+        } else store.books = PRODUCTS;
+    }
+    filterQuantity() {
+        const url = new URL(window.location.href);
+        const category = url.searchParams.getAll('quantity');
+        if (category.length) {
+            category.forEach((value) => {
+                store.books = this.books.filter(function (item: Product) {
+                    if (value === 'stok') return item.quantity > 0;
+                    if (value === 'stokNo') return item.quantity === 0;
+                    if (value === 'order') return item.quantity === 'Под заказ';
+                });
+            });
+        }
+    }
+    filterType() {
+        const url = new URL(window.location.href);
+        const category = url.searchParams.getAll('type');
+        if (category.length) {
+            category.forEach((value) => {
+                store.books = this.books.filter(function (item: Product) {
+                    if (value === 'soft') return item.type === 'Мягкая обложка';
+                    if (value === 'hard') return item.type === 'Твердый переплет';
+                    if (value === 'integral') return item.type === 'Интегральный переплёт';
+                });
+            });
+        }
+    }
 }

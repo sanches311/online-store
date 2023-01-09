@@ -47,10 +47,14 @@ export default class MainPage {
     getBooksHtml() {
         const url = new URL(window.location.href);
         const view = url.searchParams.get('big');
-        const filter = new Filter(store.books);
 
+        const filter = new Filter(store.books);
         filter.sort();
         filter.liveSearch();
+        filter.filterCategory();
+        filter.filterQuantity();
+        filter.filterType();
+        
 
         if (view === 'true' || view === null)
             return store.books
@@ -203,49 +207,49 @@ export default class MainPage {
               <h3 class="category__title">Разделы</h3>
               <ul class="category">
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='belorussian' class='category-book' type="checkbox">
                   <p>Книги на белорусском языке</p>
                   <div id='filter-bel-count'class="filter-matching">${this.getBooksCount().belorussian.countAll}/ ${
             this.getBooksCount().belorussian.countCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='foreign' class='category-book' type="checkbox">
                   <p>Иностранная литература</p>
                   <div id='filter-for-count' class="filter-matching">${this.getBooksCount().foreign.countAll}/ ${
             this.getBooksCount().foreign.countCurr
         } </div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='computer' class='category-book' type="checkbox">
                   <p>Компьютерная литература</p>
                   <div id='filter-comp-count' class="filter-matching">${this.getBooksCount().computer.countAll}/ ${
             this.getBooksCount().computer.countCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='scientific' class='category-book' type="checkbox">
                   <p>Научная литература</p>
                   <div id='filter-sci-count' class="filter-matching">${this.getBooksCount().scientific.countAll}/ ${
             this.getBooksCount().scientific.countCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='artistic' class='category-book' type="checkbox">
                   <p>Художественная литература</p>
                   <div id='filter-art-count' class="filter-matching">${this.getBooksCount().artistic.countAll}/ ${
             this.getBooksCount().artistic.countCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='business' class='category-book' type="checkbox">
                   <p>Бизнес литература</p>
                   <div id='filter-bus-count' class="filter-matching">${this.getBooksCount().business.countAll}/ ${
             this.getBooksCount().business.countCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='children' class='category-book' type="checkbox">
                   <p>Детская литература</p>
                   <div id='filter-chil-count' class="filter-matching">${this.getBooksCount().children.countAll}/ ${
             this.getBooksCount().children.countCurr
@@ -256,21 +260,21 @@ export default class MainPage {
               <h3 class="category__title">Наличие</h3>
               <ul class="category">
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input  name='stok' class='quantity-book' type="checkbox">
                   <p>На складе</p>
                   <div id='filter-stok-count' class="filter-matching">${this.getBooksCount().stok.countAll}/ ${
             this.getBooksCount().stok.countCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='order' class='quantity-book' type="checkbox">
                   <p>Под заказ</p>
                   <div id='filter-stokOrd-count' class="filter-matching">${this.getBooksCount().stok.countOrderAll}/ ${
             this.getBooksCount().stok.countOrderCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='stokNo' class='quantity-book' type="checkbox">
                   <p>Нет в наличии</p>
                   <div id='filter-stokNoOrd-count' class="filter-matching">${this.getBooksCount().stok.countNoAll}/ ${
             this.getBooksCount().stok.countNoCurr
@@ -282,21 +286,21 @@ export default class MainPage {
               <h3 class="category__title">Обложка</h3>
               <ul class="category">
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='soft' class='type-book' type="checkbox">
                   <p>Мягкая обложка</p>
                   <div id='filter-soft-count' class="filter-matching">${this.getBooksCount().type.countSoftAll}/ ${
             this.getBooksCount().type.countSoftCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='hard' class='type-book' type="checkbox">
                   <p>Твёрдый переплёт</p>
                   <div id='filter-hard-count' class="filter-matching">${this.getBooksCount().type.countHardAll}/ ${
             this.getBooksCount().type.countHardCurr
         }</div>
                 </li>
                 <li class="categoty__item">
-                  <input type="checkbox">
+                  <input name='integral' class='type-book' type="checkbox">
                   <p>Интегральный переплёт</p>
                   <div id='filter-int-count' class="filter-matching">${this.getBooksCount().type.countIntAll}/ ${
             this.getBooksCount().type.countIntCurr
