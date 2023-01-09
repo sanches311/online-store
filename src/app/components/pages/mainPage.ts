@@ -3,6 +3,8 @@ import { Product } from '../../interfaces/Product';
 import { MainProductItem } from './productItem/mainProductItem';
 import store from '../../store/store';
 import Filter from './filter';
+import localStorageState from '../../store/state';
+import header from './componentsClasses/header';
 
 interface Ioptions {
     options: Array<{ value: string; label: string }>;
@@ -21,6 +23,19 @@ export default class MainPage {
         ],
         currentOptions: 'default',
     };
+
+    addEvents() {
+      let addButtons = Array.from(document.querySelectorAll('.main-add-button'));
+     
+      addButtons.forEach((elem) => {
+        elem.addEventListener('click', function(e) {
+          const target = e.target as HTMLElement;
+          localStorageState.putProducts(Number(target.id.substring(8)));
+          console.log(localStorageState.getProducts());
+          header.changeMainHeader();
+        })
+      })
+    }
 
     getSelectOption() {
         const curr = (value: string) => {

@@ -5,13 +5,13 @@ import store from '../store/store';
 
 export default {
     listenselectBook() {
-        document.addEventListener('click', (event) => {
+         document.addEventListener('click', (event) => {
             const target = event.target as HTMLElement;
-            if (target.closest('.main-page-item-button')) {
+            if (target.closest('.details-button')) {
                 const idBook = target.getAttribute('id');
                 location.hash = `book/${idBook}`;
-            }
-        });
+            } 
+        }); 
     },
 
     listenView() {

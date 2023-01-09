@@ -11,6 +11,7 @@ export default {
         const mainPage = new MainPage();
         const mainPageHtml = await mainPage.getMainPageHtml();
         render(mainPageHtml);
+        mainPage.addEvents();
     },
     async bookRoute(props: { id: number }) {
         const bookPage = new BookPage(props.id);

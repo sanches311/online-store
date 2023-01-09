@@ -1,8 +1,11 @@
 import { Product } from '../../../interfaces/Product';
+import localStorageState from '../../../store/state';
 
 export class MainProductItem {
-    constructor(private item: Product) {}
-    /*Это специальный генератор id для кнопки добавления товара в корзину*/
+    constructor(private item: Product) {
+     
+    }
+
     private getHtmlId = () => `product_${this.item.id}`; 
     books2Column() {
         return `
@@ -30,8 +33,8 @@ export class MainProductItem {
       <span class="main-page-item-price">${this.item.price}</span> USD
     </div>
     <div class="products-container-buttons">
-      <button class="main-page-item-button" id='${this.getHtmlId()}'>add to cart</button>
-      <button id='${this.item.id}' class="main-page-item-button">details</button>
+      <button class="main-page-item-button main-add-button" id='${this.getHtmlId()}'>add to cart</button>
+      <button id='${this.item.id}' class="main-page-item-button details-button">details</button>
     </div>
     </div>
   </div>
@@ -51,4 +54,5 @@ export class MainProductItem {
                 </div>
       `;
     }
+
 }

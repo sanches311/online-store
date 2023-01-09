@@ -1,4 +1,6 @@
+import { PRODUCTS } from "../../../db/products.db";
 import { Product } from "../../../interfaces/Product";
+import localStorageState from "../../../store/state";
 import cartSummary from "./cartSummary";
 import promoCode from "./promoCode";
 
@@ -33,6 +35,26 @@ export class Header {
     cartHeaderHtml.innerHTML = `${this.amount}`;
     cartSummary.chandeProducts(this.amount);
   }
+
+  changeMainHeader() {
+    let productStore = localStorageState.getProducts();
+    let products: Product[] = [];
+    const resultHeaderHtml = document.getElementById('header-result');
+    const cartHeaderHtml = document.getElementById('header-cart');
+
+    PRODUCTS.forEach(({ id }) => {
+      if (productStore.indexOf(id) !== -1) {
+        products.push(PRODUCTS[id]);
+      }
+    })
+    console.log(products);
+    this.sum = Object.values(products).reduce((sum, item) => sum + item.price, 0);
+    resultHeaderHtml!.innerHTML = `$${this.sum.toFixed(2)}`;
+
+    this.amount = Object.keys(products).length;
+    cartHeaderHtml!.innerHTML = `${this.amount}`;
+  }
+
   chandeRemoveCartHeader() {
     const cartHeaderHtml = document.getElementById('header-cart');
     if (!cartHeaderHtml) {
@@ -85,3 +107,7 @@ export class Header {
 }
 const header = new Header();
 export default header;
+
+function createProductsComponent() {
+  throw new Error("Function not implemented.");
+}

@@ -38,7 +38,6 @@ export class ProductItem {
       this.addItemPrice();
       header.chandeAddCartHeader();
       header.chandeAddResultHeader(this.item.price);
-      
     })
 
   }
@@ -65,12 +64,11 @@ export class ProductItem {
     buttonRemove.addEventListener('click', (event) => {
 
       if (this.order === 1) {
+        localStorageState.deleteProducts(this.item.id);
         document.getElementById(this.getHtmlProductId())?.remove();
         this.changeNumeration();
         header.chandeRemoveCartHeader();
         header.chandeRemoveResultHeader(this.item.price);
-      
-        //localStorageState.deleteProducts(this.item.id);
         return;
       }
       
