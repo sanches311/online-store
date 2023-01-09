@@ -2,10 +2,11 @@ import { Product } from "../../interfaces/Product";
 import { PRODUCTS } from "../../db/products.db";
 import { ProductItem } from "./productItem/productItem";
 import localStorageState from "../../store/state";
-import modalWindow, { ModalWindow } from "./modalPage";
+import modalWindow from "./modalPage";
 import header from "./componentsClasses/header";
-import cartSummary from "./componentsClasses/cartSummary";
 import promoCode from "./componentsClasses/promoCode";
+import { MainProductItem } from "./productItem/mainProductItem";
+import { render } from "../view";
 
 export default class Cart {
   private products: Product[] = [];
@@ -28,6 +29,7 @@ export default class Cart {
     })
     this.productsComponent = this.products.map((item: Product, index: number) => new ProductItem(item, index));
     this.productsPages = this.productsComponent.slice(0, this.itemsOnPage);
+
   }
 
   updateSummary() {
@@ -35,102 +37,100 @@ export default class Cart {
     this.price = Object.values(this.productsComponent).reduce((sum, item) => sum + item.item.price, 0);
   }
 
-  createComponentRender() {
 
+ 
+
+  createComponentRender() {
+    
     let cartCelect = document.getElementById('cart-select');
     let allProducts = this.productsComponent;
-
     cartCelect?.addEventListener('change', function (e) {
-      changePage();
-      updateItems();
-    })
-     
-    function updateItems() {
-      let allItemsOnPage = Array.from(document.querySelectorAll('.products-container__item'));
-      let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
-      let pageNum = document.getElementById('page-clicked')?.textContent;
-        if(!pageNum) {
-          throw new Error('Number is undefined')
-        }
-      let startFrom = parseInt(pageNum) * parseInt(inputValue);
-      let data = allItemsOnPage.slice(startFrom - parseInt(inputValue), startFrom);
-      allItemsOnPage.forEach((elem) => {
-        if (!elem.classList.contains('pagination-items')) {
-          elem.classList.add('pagination-items');
-        }
-       
-      })
-      
-      data.forEach((elem) => {
-        elem.classList.remove('pagination-items')
-      
-      })
-    }
 
+      const target = e.target as HTMLInputElement;
+      const url = new URL(window.location.href);
+
+      const idBook = target.value;
+      url.hash = `cart/?limit=${idBook}`;
+      window.history.pushState({}, '', url);
+
+      updateItems();
+
+      let countPages = Math.ceil(allProducts.length / parseInt(idBook));
+      let pageNum = document.getElementById('page-clicked')?.textContent;
+      let numContainer = document.getElementById('page-clicked');
+      let num = parseInt(pageNum!);
+      if (countPages < num) {
+        const url = new URL(window.location.href);
+        url.hash = `cart/?limit=${idBook}&page=${countPages}`;
+        window.history.pushState({}, '', url);
+        numContainer!.innerHTML = `${countPages}`;
+        updateItems();
+       } 
+    })
+
+    changePage();
+   
+
+    function updateItems() {
+      let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value
+      let pageNum = document.getElementById('page-clicked')?.textContent;
+      if (!pageNum) {
+        throw new Error('Number is undefined')
+      }
+      let startFrom = parseInt(pageNum) * parseInt(inputValue!);
+      let data = allProducts.slice(startFrom - parseInt(inputValue!), startFrom);
+      document.querySelector('.products-container')!.innerHTML = `${data.map((product) => product.render()).join('')}`;
+
+    }
+   
     function changePage() {
       let count: number = 1;
-      
-      let input = (<HTMLInputElement>document.getElementById('cart-select')).value;
-      let countPages = Math.ceil(allProducts.length / parseInt(input));
-      let buttonAdd = document.getElementById('pagination-add');
+
       let buttonRemove = document.getElementById('pagination-remove');
-      if(!buttonAdd) {
-        throw new Error('Button is undefined')
-      }
-      if(!buttonRemove) {
-        throw new Error('Button is undefined')
-      }
-      buttonAdd.addEventListener('click', function(e) {
-    
-       ++count;
-   
-       if (count >= countPages) {
-        count = countPages;
-   
-       }
+      let buttonAdd = document.getElementById('pagination-add');
+
+      buttonAdd!.addEventListener('click', function (e) {
+        let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
+        let countPages = Math.ceil(allProducts.length / parseInt(inputValue));
 
         let pageNum = document.getElementById('page-clicked')?.textContent;
-        
-        if(!pageNum) {
-          throw new Error('Number is undefined')
-        }
-        let num = parseInt(pageNum);
+        let numContainer = document.getElementById('page-clicked');
+        let num = parseInt(pageNum!);
 
-        
-        if (num === countPages) {
+        if (num == countPages) {
+          count = countPages;
           return;
         }
-        
+        count = count + 1;
+        const url = new URL(window.location.href);
+        url.hash = `cart/?limit=${inputValue}&page=${count}`;
+        window.history.pushState({}, '', url);
+        numContainer!.innerHTML = `${count}`;
+        updateItems();
+  
+      })
+      buttonRemove!.addEventListener('click', function (e) {
+        let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
+        let pageNum = document.getElementById('page-clicked')?.textContent;
         let numContainer = document.getElementById('page-clicked');
-        if(!numContainer) {
-          throw new Error('Number is undefined')
+        let num = parseInt(pageNum!);
+
+        if (count <= 0) {
+          count = 1;
+        }
+        if (num == 1) {
+          return;
         }
 
-        numContainer.innerHTML = `${count}`;
-       
+        count = count - 1;
+        const url = new URL(window.location.href);
+        url.hash = `cart/?limit=${inputValue}&page=${count}`;
+        window.history.pushState({}, '', url);
+    
+        numContainer!.innerHTML = `${count}`;
+
         updateItems();
-      })
-      buttonRemove.addEventListener('click', function(e) {
-        --count;
-          if (count == 0) {
-            count = 1;
-          }
-        let pageNum = document.getElementById('page-clicked')?.textContent;
-        if(!pageNum) {
-          throw new Error('Number is undefined')
-        }
-        let num = parseInt(pageNum);
-       if (num == 1) {
-        return;
-       }
-       
-        let numContainer = document.getElementById('page-clicked');
-        if(!numContainer) {
-          throw new Error('Number is undefined')
-        }
-        numContainer.innerHTML = `${count}`;
-      
-       updateItems();
+ 
       })
     }
   }

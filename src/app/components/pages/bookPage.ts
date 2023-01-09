@@ -1,7 +1,9 @@
 import { PRODUCTS } from '../../db/products.db';
 
 export default class BookPage {
-    constructor(private id: number) {}
+    constructor(private id: number) {
+        this.addEvents();
+    }
     getBook() {
         return PRODUCTS.filter((item) => item.id === this.id)[0];
     }
@@ -19,6 +21,7 @@ export default class BookPage {
 
     getBookPageHtml(): string {
         const item = this.getBook();
+        
         return `<main class="product-details-page">
         <div class="container">
             <div class="breadcrumbs">
@@ -30,23 +33,18 @@ export default class BookPage {
             <section class="product-info">
                 <div class="carousel">
                     <div class="show-img">
-                        <img src="${item.imageUrl[0]}"
+                        <img id="main-product-img" src="${item.imageUrl[0]}"
                             alt="An image of the selected book.">
                     </div>
                     <div class="carousel-img">
                         <div class="carousel-img__item">
                             <img class="item-img"
+                                src="${item.imageUrl[0]}"
+                                alt="Another picture of the book.">
+                        </div>
+                        <div class="carousel-img__item">
+                            <img class="item-img"
                                 src="${item.imageUrl[1]}"
-                                alt="Another picture of the book.">
-                        </div>
-                        <div class="carousel-img__item">
-                            <img class="item-img"
-                                src="https://img.freepik.com/free-photo/mountains-lake_1398-1150.jpg?w=2000"
-                                alt="Another picture of the book.">
-                        </div>
-                        <div class="carousel-img__item">
-                            <img class="item-img"
-                                src="https://upload.wikimedia.org/wikipedia/commons/9/94/Desert_Electric.jpg"
                                 alt="Another picture of the book.">
                         </div>
                     </div>
@@ -64,16 +62,16 @@ export default class BookPage {
                                 <p class="category-item__name">Год издания:</p>
                                 <p class="category-item__description">${item.year}</p>
                             </div>
-                            <div class="category-item">
-                                <p class="category-item__name">Обложка:</p>
-                                <p class="category-item__description">${item.type}</p>
-                            </div>
                         </div>
                         <div class="column">
                             <div class="category-item">
                                 <p class="category-item__name">В наличии:</p>
                                 <p class="category-item__description">${item.quantity}</p>
                             </div>
+                            <div class="category-item">
+                            <p class="category-item__name">Обложка:</p>
+                            <p class="category-item__description">${item.type}</p>
+                        </div>
                         </div>
                     </div>
                     <div class="column-3">
@@ -90,5 +88,21 @@ export default class BookPage {
             </section>
         </div>
     </main>`;
+    }
+    addEvents() {
+        const imgItems = Array.from(document.querySelectorAll('.item-img'));
+        const mainImg = document.getElementById('main-product-img');
+
+        for(let x = 0; x < imgItems.length; x++) {
+            let img = imgItems[x];
+            img.addEventListener('click', function(e) {
+                const target = e.target as Element
+                if (mainImg?.getAttribute('src') !== target.getAttribute('src')) {
+                    mainImg?.setAttribute('src', `${target.getAttribute('src')}`)
+                }
+            })
+        }
+
+
     }
 }

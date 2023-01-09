@@ -16,6 +16,7 @@ export default {
         const bookPage = new BookPage(props.id);
         const bookPageHtml = await bookPage.getBookPageHtml();
         render(bookPageHtml);
+        bookPage.addEvents();
     },
     async cartRoute(): Promise<void> {
         document.title = 'online-store cart';
