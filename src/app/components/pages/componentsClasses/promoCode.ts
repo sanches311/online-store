@@ -40,7 +40,7 @@ export class PromoCode {
         addButton.style.display = 'none';
 
         let oldPrice = document.querySelector('.summary__price');
-        oldPrice?.classList.toggle('price-promo-code');
+        oldPrice?.classList.add('price-promo-code');
         const summaryPriceContent = document.getElementById('summary-price');
         if (!summaryPriceContent) {
           throw new Error('Div is undefined.');
@@ -91,7 +91,7 @@ export class PromoCode {
         appliedContainer.style.display = 'none'; 
 
         let oldPrice = document.querySelector('.summary__price');
-        oldPrice?.classList.toggle('price-promo-code');
+        oldPrice?.classList.remove('price-promo-code');
         const summaryPriceContent = document.getElementById('total-price-sale');
         if (!summaryPriceContent) {
           throw new Error('Div is undefined.');
