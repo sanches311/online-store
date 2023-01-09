@@ -51,6 +51,9 @@ export default class MainPage {
 
         filter.sort();
         filter.liveSearch();
+        filter.filterCategory();
+        filter.filterQuantity();
+        filter.filterType();
 
         if (view === 'true' || view === null)
             return store.books
