@@ -1,4 +1,3 @@
-import { PRODUCTS } from '../db/products.db';
 import MainPage from './pages/mainPage';
 import { renderProduct, render, renderBooksCount, renderBooksFilterCount } from './view';
 import Filter from './pages/filter';
