@@ -199,15 +199,13 @@ export default class Cart {
   }
   showModal(windowHash: string) {
     if(window.location.hash === windowHash) {
-      let modalWindow = new ModalWindow();
-      
-      let elemModal = document.createElement('div');
+      setTimeout(function() {
+        let elemModal = document.createElement('div');
       elemModal.classList.add('modal');
       elemModal.classList.add('modal-active');
       elemModal.id = 'modal-window';
       elemModal.innerHTML = modalWindow.render();
       const container = document.getElementById('container');
-      console.log(container)
       if (!container) {
         throw new Error('Container is undefined');
       }
@@ -215,6 +213,8 @@ export default class Cart {
       container.append(elemModal);
       modalWindow.addEvents(elemModal);
       modal.addEvents();
+      }, 10)
+      
    }
   }
   addEvents() {

@@ -13,7 +13,7 @@ export class MainProductItem {
     <div class="products-container-img">
       <img src="${this.item.imageUrl[0]}" alt="Product image">
     </div>
-    <div>
+    <div class="product-container-column">
       <div class="products-container-description">
       <h3>${this.item.title}</h3>
       <div class="description-item">
