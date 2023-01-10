@@ -51,7 +51,7 @@ export default class MainPage {
         const filter = new Filter(PRODUCTS);
         filter.sort();
         return `
-      <select id="sort">
+      <select id="sort" class="main-select">
       ${this.stateOptions.options
           .map((option) => {
               return `<option ${curr(option.value)} value='${option.value}'>${option.label}</option>`;

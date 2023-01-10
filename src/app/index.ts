@@ -6,6 +6,8 @@ import { loadLogo } from './components/utils';
 import listen from './components/listen';
 import header from './components/pages/componentsClasses/header';
 
+
+header.changeMainHeader();
 initRoute();
 loadLogo();
 Listen.listenselectBook();
@@ -13,5 +15,6 @@ Listen.listenView();
 listen.listenSort();
 listen.listenBack();
 listen.listenLiveSearch();
-
-header.changeMainHeader();
+listen.listenFilterCategory();
+listen.listenFilterQuantity();
+Listen.listenFilterType();

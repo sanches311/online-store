@@ -1,7 +1,9 @@
 import { Product } from '../interfaces/Product';
 
 export class LocalStorageState {
-
+  static getProducts() {
+    throw new Error("Method not implemented.");
+  }
   constructor() {
     
   }
