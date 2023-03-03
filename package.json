@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack serve --open --config ./webpack.config.js --env mode=dev",
     "build": "webpack --config ./webpack.config.js --env mode=prod",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-webpack-plugin": "^3.2.0",
     "html-webpack-plugin": "^5.5.0",
@@ -42,5 +43,8 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb-typescript": "^17.0.0"
   }
 }

@@ -1,34 +1,36 @@
-import { Product } from "../../../interfaces/Product";
-import localStorageState from "../../../store/state";
-import cartSummary from "../componentsClasses/cartSummary";
-import header from "../componentsClasses/header";
-import promoCode from "../componentsClasses/promoCode";
+import { Product } from '../../../interfaces/Product';
+import localStorageState from '../../../store/state';
+import header from '../componentsClasses/header';
 
-export class ProductItem {
-  constructor(public item: Product, private index: number) {
+export default class ProductItem {
+  constructor(public item: Product, private index: number) {}
 
-  }
-  private order: number = 1;
+  private order = 1;
+
   private itemPrice: number = this.item.price;
-  private getHtmlIdAdd = () => `add-button_${this.item.id}`;
-  private getHtmlIdRemove = () => `remove-button_${this.item.id}`;
-  private getHtmlOrderId = () => `order_${this.item.id}`;
-  private getHtmlProductId = () => `product_${this.item.id}`;
-  private getHtmlPrice = () => `price_${this.item.id}`;
 
+  private getHtmlIdAdd = () => `add-button_${this.item.id}`;
+
+  private getHtmlIdRemove = () => `remove-button_${this.item.id}`;
+
+  private getHtmlOrderId = () => `order_${this.item.id}`;
+
+  private getHtmlProductId = () => `product_${this.item.id}`;
+
+  private getHtmlPrice = () => `price_${this.item.id}`;
 
   addOrder() {
     const buttonAdd = document.getElementById(this.getHtmlIdAdd());
     if (!buttonAdd) {
       throw new Error('Button is undefined');
     }
-    buttonAdd.addEventListener('click', (event) => {
-      if (this.order == this.item.quantity) {
+    buttonAdd.addEventListener('click', () => {
+      if (this.order === this.item.quantity) {
         return;
       }
-      this.order++;
-      if (this.order == this.item.quantity) {
-        buttonAdd.setAttribute("disabled", "disabled");
+      this.order += 1;
+      if (this.order === this.item.quantity) {
+        buttonAdd.setAttribute('disabled', 'disabled');
       }
       const orderHtml = document.getElementById(this.getHtmlOrderId());
       if (!orderHtml) {
@@ -38,9 +40,9 @@ export class ProductItem {
       this.addItemPrice();
       header.chandeAddCartHeader();
       header.chandeAddResultHeader(this.item.price);
-    })
-
+    });
   }
+
   addItemPrice() {
     const priceHtml = document.getElementById(this.getHtmlPrice());
     if (!priceHtml) {
@@ -49,20 +51,22 @@ export class ProductItem {
     this.itemPrice += this.item.price;
     priceHtml.innerHTML = `${this.itemPrice}`;
   }
+
   changeNumeration() {
     const allItemProducts = document.querySelectorAll('.item__num');
     allItemProducts.forEach((elem, index: number) => {
-      elem.innerHTML = `${index += 1}`;
-    })
+      let itemIndex = index;
+      elem.innerHTML = `${(itemIndex += 1)}`;
+    });
   }
+
   removeOrder() {
     const buttonRemove = document.getElementById(this.getHtmlIdRemove());
     const buttonAdd = document.getElementById(this.getHtmlIdAdd());
     if (!buttonRemove || !buttonAdd) {
       throw new Error('Button is undefined');
     }
-    buttonRemove.addEventListener('click', (event) => {
-
+    buttonRemove.addEventListener('click', () => {
       if (this.order === 1) {
         localStorageState.deleteProducts(this.item.id);
         document.getElementById(this.getHtmlProductId())?.remove();
@@ -71,10 +75,10 @@ export class ProductItem {
         header.chandeRemoveResultHeader(this.item.price);
         return;
       }
-      
-      this.order--;
-      if (this.order != this.item.quantity) {
-        buttonAdd.removeAttribute("disabled");
+
+      this.order -= 1;
+      if (this.order !== this.item.quantity) {
+        buttonAdd.removeAttribute('disabled');
       }
       const orderHtml = document.getElementById(this.getHtmlOrderId());
       if (!orderHtml) {
@@ -84,8 +88,9 @@ export class ProductItem {
       this.removeItemPrice();
       header.chandeRemoveCartHeader();
       header.chandeRemoveResultHeader(this.item.price);
-    })
+    });
   }
+
   removeItemPrice() {
     const priceHtml = document.getElementById(this.getHtmlPrice());
     if (!priceHtml) {
@@ -96,7 +101,6 @@ export class ProductItem {
   }
 
   render() {
-
     return `
     <div class="products-container__item" id='${this.getHtmlProductId()}'>
     <div class="item__num">${this.index + 1}</div>
@@ -134,6 +138,7 @@ export class ProductItem {
   </div>
     `;
   }
+
   addEvents() {
     this.addOrder();
     this.removeOrder();

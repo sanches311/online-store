@@ -1,12 +1,12 @@
 import { Product } from '../../../interfaces/Product';
-import localStorageState from '../../../store/state';
 
-export class MainProductItem {
+export default class MainProductItem {
     constructor(private item: Product) {
      
     }
 
     private getHtmlId = () => `product_${this.item.id}`; 
+
     books2Column() {
         return `
     <div id='${this.item.id}'class="products-container-2">
@@ -40,6 +40,7 @@ export class MainProductItem {
   </div>
     `;
     }
+
     books3Column() {
         return `
       <div id='${this.item.id}' class="products-container-3">

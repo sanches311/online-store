@@ -1,30 +1,24 @@
 import cardImg from '../../../assets/img/modal-window/card.png';
-export class ModalWindow {
-    constructor() {
-       
-    }
-    addEvents(elem: HTMLElement) {
 
-        elem.addEventListener('click', function (e) {
-            let modalContainer = document.querySelector('.modal__window');
-            if (!modalContainer) {
-                throw new Error('Div is undefined.')
-            }
-            let withinModal = e.composedPath().includes((<Node>modalContainer));
-            if (!(e.composedPath().includes((<Node>modalContainer)))) {
-                let deleteDiv = document.getElementById('modal-window');
-                if (!deleteDiv) {
-                    throw new Error('Div is undefined.')
-                }
-                deleteDiv.remove();
-                return;
-            }
-        })
-        
-    }
-    render() {
-       
-        return ` <div class="modal modal-active" id='open-modal'>
+export class ModalWindow {
+  addEvents(elem: HTMLElement) {
+    elem.addEventListener('click', (e) => {
+      const modalContainer = document.querySelector('.modal__window');
+      if (!modalContainer) {
+        throw new Error('Div is undefined.');
+      }
+      if (!e.composedPath().includes(<Node>modalContainer)) {
+        const deleteDiv = document.getElementById('modal-window');
+        if (!deleteDiv) {
+          throw new Error('Div is undefined.');
+        }
+        deleteDiv.remove();
+      }
+    });
+  }
+
+  render() {
+    return ` <div class="modal modal-active" id='open-modal'>
   <div class="modal-container">
       <div class="modal__window" role="dialog" aria-modal="true">
           <h2>Personal details</h2>
@@ -77,11 +71,9 @@ export class ModalWindow {
       </div>
   </div>
 </div>`;
-
-    }
-
+  }
 }
 
-let modalWindow = new ModalWindow();
+const modalWindow = new ModalWindow();
 
 export default modalWindow;

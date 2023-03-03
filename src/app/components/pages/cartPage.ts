@@ -1,35 +1,36 @@
-import { Product } from "../../interfaces/Product";
-import { PRODUCTS } from "../../db/products.db";
-import { ProductItem } from "./productItem/productItem";
-import localStorageState from "../../store/state";
-import modalWindow, { ModalWindow } from "./modalPage";
-import header from "./componentsClasses/header";
-import promoCode from "./componentsClasses/promoCode";
-import modal from "./componentsClasses/modal";
+import { Product } from '../../interfaces/Product';
+import { PRODUCTS } from '../../db/products.db';
+import ProductItem from './productItem/productItem';
+import localStorageState from '../../store/state';
+import modalWindow from './modalPage';
+import header from './componentsClasses/header';
+import promoCode from './componentsClasses/promoCode';
+import modal from './componentsClasses/modal';
 
 export default class Cart {
   private products: Product[] = [];
-  
+
   private productsComponent: ProductItem[] = [];
+
   private productsPages: ProductItem[] = [];
-  private amount: number = 0;
-  private price: number = 0;
-  private pageClicked: number = 1;
-  private itemsOnPage: number = 0;
 
-  constructor() {
+  private amount = 0;
 
-  }
+  private price = 0;
+
+  private pageClicked = 1;
+
+  private itemsOnPage = 0;
+
   createProductsComponent() {
-    let productStore = localStorageState.getProducts();
+    const productStore = localStorageState.getProducts();
     PRODUCTS.forEach(({ id }) => {
       if (productStore.indexOf(id) !== -1) {
         this.products.push(PRODUCTS[id]);
       }
-    })
+    });
     this.productsComponent = this.products.map((item: Product, index: number) => new ProductItem(item, index));
     this.productsPages = this.productsComponent.slice(0, this.itemsOnPage);
-
   }
 
   updateSummary() {
@@ -37,15 +38,23 @@ export default class Cart {
     this.price = Object.values(this.productsComponent).reduce((sum, item) => sum + item.item.price, 0);
   }
 
-
- 
-
   createComponentRender() {
-    
-    let cartCelect = document.getElementById('cart-select');
-    let allProducts = this.productsComponent;
-    cartCelect?.addEventListener('change', function (e) {
-
+    const cartCelect = document.getElementById('cart-select');
+    const allProducts = this.productsComponent;
+    function updateItems() {
+      const inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
+      const pageNum = document.getElementById('page-clicked')?.textContent;
+      if (!pageNum) {
+        throw new Error('Number is undefined');
+      }
+      const startFrom = parseInt(pageNum, 10) * parseInt(inputValue, 10);
+      const data = allProducts.slice(startFrom - parseInt(inputValue, 10), startFrom);
+      const container = document.querySelector('.products-container');
+      if (container) {
+        container.innerHTML = `${data.map((product) => product.render()).join('')}`;
+      }
+    }
+    cartCelect?.addEventListener('change', (e) => {
       const target = e.target as HTMLInputElement;
       const url = new URL(window.location.href);
       const idBook = target.value;
@@ -54,84 +63,81 @@ export default class Cart {
 
       updateItems();
 
-      let countPages = Math.ceil(allProducts.length / parseInt(idBook));
-      let pageNum = document.getElementById('page-clicked')?.textContent;
-      let numContainer = document.getElementById('page-clicked');
-      let num = parseInt(pageNum!);
-      if (countPages < num) {
-        const url = new URL(window.location.href);
-        url.hash = `cart/?limit=${idBook}&page=${countPages}`;
-        window.history.pushState({}, '', url);
-        numContainer!.innerHTML = `${countPages}`;
-        updateItems();
-       } 
-    })
-
-    changePage();
-   
-
-    function updateItems() {
-      let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value
-      let pageNum = document.getElementById('page-clicked')?.textContent;
-      if (!pageNum) {
-        throw new Error('Number is undefined')
+      const countPages = Math.ceil(allProducts.length / parseInt(idBook, 10));
+      const pageNum = document.getElementById('page-clicked')?.textContent;
+      const numContainer = document.getElementById('page-clicked');
+      let num = 0;
+      if (pageNum) {
+        num = parseInt(pageNum, 10);
       }
-      let startFrom = parseInt(pageNum) * parseInt(inputValue!);
-      let data = allProducts.slice(startFrom - parseInt(inputValue!), startFrom);
-      document.querySelector('.products-container')!.innerHTML = `${data.map((product) => product.render()).join('')}`;
+      if (countPages < num) {
+        const urlLocation = new URL(window.location.href);
+        urlLocation.hash = `cart/?limit=${idBook}&page=${countPages}`;
+        window.history.pushState({}, '', urlLocation);
+        if (numContainer) {
+        numContainer.innerHTML = `${countPages}`;
+        }
+        updateItems();
+      }
+    });
 
-    }
-   
     function changePage() {
-      let count: number = 1;
+      let count = 1;
+      const buttonRemove = document.getElementById('pagination-remove');
+      const buttonAdd = document.getElementById('pagination-add');
 
-      let buttonRemove = document.getElementById('pagination-remove');
-      let buttonAdd = document.getElementById('pagination-add');
+      buttonAdd?.addEventListener('click', () => {
+        const inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
+        const countPages = Math.ceil(allProducts.length / parseInt(inputValue, 10));
 
-      buttonAdd!.addEventListener('click', function (e) {
-        let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
-        let countPages = Math.ceil(allProducts.length / parseInt(inputValue));
+        const pageNum = document.getElementById('page-clicked')?.textContent;
+        const numContainer = document.getElementById('page-clicked');
+        let num  = 0;
+        if (pageNum) {
+         num = parseInt(pageNum, 10);
+        }
 
-        let pageNum = document.getElementById('page-clicked')?.textContent;
-        let numContainer = document.getElementById('page-clicked');
-        let num = parseInt(pageNum!);
-
-        if (num == countPages) {
+        if (num === countPages) {
           count = countPages;
           return;
         }
-        count = count + 1;
+        count += 1;
         const url = new URL(window.location.href);
         url.hash = `cart/?limit=${inputValue}&page=${count}`;
         window.history.pushState({}, '', url);
-        numContainer!.innerHTML = `${count}`;
+        if (numContainer) {
+        numContainer.innerHTML = `${count}`;
+        }
         updateItems();
-  
-      })
-      buttonRemove!.addEventListener('click', function (e) {
-        let inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
-        let pageNum = document.getElementById('page-clicked')?.textContent;
-        let numContainer = document.getElementById('page-clicked');
-        let num = parseInt(pageNum!);
-
+      });
+      buttonRemove?.addEventListener('click', () => {
+        const inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
+        const pageNum = document.getElementById('page-clicked')?.textContent;
+        const numContainer = document.getElementById('page-clicked');
+        let num = 0; 
+        if (pageNum) {
+          num = parseInt(pageNum, 10);
+        }
         if (count <= 0) {
           count = 1;
         }
-        if (num == 1) {
+        if (num === 1) {
           return;
         }
 
-        count = count - 1;
+        count -= 1;
         const url = new URL(window.location.href);
         url.hash = `cart/?limit=${inputValue}&page=${count}`;
         window.history.pushState({}, '', url);
-    
-        numContainer!.innerHTML = `${count}`;
-
+        if (numContainer) {
+        numContainer.innerHTML = `${count}`;
+        }
         updateItems();
- 
-      })
+      });
     }
+
+    changePage();
+
   }
 
   render() {
@@ -147,7 +153,9 @@ export default class Cart {
             <div class="products-header">
               <h3 class="products__title">Products in cart</h3>
               <div class="products__items">
-                items: <input id="cart-select" class="cart-items" type="number" min="1" max="${this.productsComponent.length}" value="${this.amount}">
+                items: <input id="cart-select" class="cart-items" type="number" min="1" max="${
+                  this.productsComponent.length
+                }" value="${this.amount}">
               </div>
               <div class="products__pagination">
                 page:
@@ -159,7 +167,11 @@ export default class Cart {
               </div>
             </div>
             <div class="products-container">
-            ${this.productsComponent.length > 0 ? this.productsComponent.map((product: ProductItem) => product.render()).join('') : `<h3 class="products__title">Cart is empty</h3>`}
+            ${
+              this.productsComponent.length > 0
+                ? this.productsComponent.map((product: ProductItem) => product.render()).join('')
+                : `<h3 class="products__title">Cart is empty</h3>`
+            }
             </div>
           </section>
           <section class="summary">
@@ -197,26 +209,27 @@ export default class Cart {
         </div>
       </main>`;
   }
-  showModal(windowHash: string) {
-    if(window.location.hash === windowHash) {
-      setTimeout(function() {
-        let elemModal = document.createElement('div');
-      elemModal.classList.add('modal');
-      elemModal.classList.add('modal-active');
-      elemModal.id = 'modal-window';
-      elemModal.innerHTML = modalWindow.render();
-      const container = document.getElementById('container');
-      if (!container) {
-        throw new Error('Container is undefined');
-      }
 
-      container.append(elemModal);
-      modalWindow.addEvents(elemModal);
-      modal.addEvents();
-      }, 10)
-      
-   }
+  showModal(windowHash: string) {
+    if (window.location.hash === windowHash) {
+      setTimeout(() => {
+        const elemModal = document.createElement('div');
+        elemModal.classList.add('modal');
+        elemModal.classList.add('modal-active');
+        elemModal.id = 'modal-window';
+        elemModal.innerHTML = modalWindow.render();
+        const container = document.getElementById('container');
+        if (!container) {
+          throw new Error('Container is undefined');
+        }
+
+        container.append(elemModal);
+        modalWindow.addEvents(elemModal);
+        modal.addEvents();
+      }, 10);
+    }
   }
+
   addEvents() {
     this.productsComponent.forEach((compotent) => compotent.addEvents());
     const button = document.getElementById('open-modal-window');
@@ -224,10 +237,9 @@ export default class Cart {
       throw new Error('Button is undefined');
     }
 
-    
-    button.addEventListener('click', function (e) {
+    button.addEventListener('click', (e) => {
       e.preventDefault();
-      let elemModal = document.createElement('div');
+      const elemModal = document.createElement('div');
       elemModal.classList.add('modal');
       elemModal.classList.add('modal-active');
       elemModal.id = 'modal-window';
@@ -240,13 +252,11 @@ export default class Cart {
       container.append(elemModal);
       modalWindow.addEvents(elemModal);
       modal.addEvents();
+    });
 
-    })
-   
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener('DOMContentLoaded', () => {
       promoCode.checkInputPromoCode();
     });
     this.createComponentRender();
-
-  };
+  }
 }

@@ -9,7 +9,7 @@ export default {
             const target = event.target as HTMLElement;
             if (target.closest('.details-button')) {
                 const idBook = target.getAttribute('id');
-                location.hash = `book/${idBook}`;
+                window.location.hash = `book/${idBook}`;
             } 
         }); 
     },
@@ -29,7 +29,7 @@ export default {
                     url.searchParams.set('big', 'true');
                     window.history.pushState({}, '', url);
                 }
-                renderProduct(html!);
+                renderProduct(html);
             }
         });
     },
@@ -45,16 +45,16 @@ export default {
                 filter.sort();
                 const mainPage = new MainPage();
                 const html = mainPage.getBooksHtml();
-                renderProduct(html!);
+                renderProduct(html);
                 mainPage.stateOptions.currentOptions = sortOpt;
             }
         });
     },
     listenBack() {
-        addEventListener('popstate', function (e) {
+        window.addEventListener('popstate', () => {
                 const mainPage = new MainPage();
                 const html = mainPage.getMainPageHtml();
-                render(html!);
+                render(html);
                 renderBooksCount();
                 renderBooksFilterCount();
             },
@@ -65,11 +65,11 @@ export default {
         document.addEventListener('input', (event) => {
             const target = event.target as HTMLElement;
             if (target.closest('#live-search')) {
-                const target = event.target as HTMLInputElement;
+                const targetClosed = event.target as HTMLInputElement;
                 const url = new URL(window.location.href);
-                url.searchParams.set('search', target.value);
+                url.searchParams.set('search', targetClosed.value);
                 window.history.pushState({}, '', url);
-                if (!target.value) {
+                if (!targetClosed.value) {
                     url.searchParams.delete('search');
                     window.history.pushState({}, '', url);
                 }
@@ -77,7 +77,7 @@ export default {
                 filter.liveSearch();
                 const mainPage = new MainPage();
                 const html = mainPage.getBooksHtml();
-                renderProduct(html!);
+                renderProduct(html);
                 renderBooksCount();
                 renderBooksFilterCount();
             }
@@ -105,7 +105,7 @@ export default {
             filter.filterCategory();
             const mainPage = new MainPage();
             const html = mainPage.getBooksHtml();
-            renderProduct(html!);
+            renderProduct(html);
             renderBooksCount();
             renderBooksFilterCount();
         });
@@ -133,7 +133,7 @@ export default {
             filter.filterQuantity();
             const mainPage = new MainPage();
             const html = mainPage.getBooksHtml();
-            renderProduct(html!);
+            renderProduct(html);
             renderBooksCount();
             renderBooksFilterCount();
         });
@@ -161,7 +161,7 @@ export default {
             filter.filterType();
             const mainPage = new MainPage();
             const html = mainPage.getBooksHtml();
-            renderProduct(html!);
+            renderProduct(html);
             renderBooksCount();
             renderBooksFilterCount();
         });

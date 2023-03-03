@@ -1,25 +1,26 @@
 import { PRODUCTS } from '../../db/products.db';
-import { Product } from '../../interfaces/Product';
 import localStorageState from '../../store/state';
 import Cart from './cartPage';
 import header from './componentsClasses/header';
 
 export default class BookPage {
     constructor(private id: number) {
-        this.addEvents(this.getBook());
+        this.addEvents();
     }
+
     getBook() {
         return PRODUCTS.filter((item) => item.id === this.id)[0];
     }
+
     getBreadCrumbs() {
         let html = '';
-        const category = this.getBook().category;
-
-        for (const key in category) {
+        const { category } = this.getBook();
+        console.log(category, '++++');
+        Object.keys(category).forEach((key) => {
             if (category[key as keyof typeof category]) {
                 html += `<li class="breadcrumbs__item">${key}</li>`;
             }
-        }
+        })
         return html;
     }
 
@@ -84,7 +85,7 @@ export default class BookPage {
                             <p class="currency"> USD</p>
                         </div>
                         <div class="description__button">
-                            <button class="description-add" id='item_${item.id}'>${localStorageState.getProducts().indexOf(item.id) == -1 ? 'Add to cart' : 'In the cart'}</button>
+                            <button class="description-add" id='item_${item.id}'>${localStorageState.getProducts().indexOf(item.id) === -1 ? 'Add to cart' : 'In the cart'}</button>
                             <button class="description-buy" id='buy_${item.id}'>Buy now</button>
                         </div>
                     </div>
@@ -93,13 +94,15 @@ export default class BookPage {
         </div>
     </main>`;
     }
-    addEvents(_item?: Product | undefined) {
+
+    addEvents() {
         const imgItems = Array.from(document.querySelectorAll('.item-img'));
         const mainImg = document.getElementById('main-product-img');
+        const descriptionAdd = document.querySelector('.description-add');
 
-        for(let x = 0; x < imgItems.length; x++) {
-            let img = imgItems[x];
-            img.addEventListener('click', function(e) {
+        for(let x = 0; x < imgItems.length; x += 1) {
+            const img = imgItems[x];
+            img.addEventListener('click', (e) => {
                 const target = e.target as Element
                 if (mainImg?.getAttribute('src') !== target.getAttribute('src')) {
                     mainImg?.setAttribute('src', `${target.getAttribute('src')}`)
@@ -107,36 +110,34 @@ export default class BookPage {
             })
         }
 
-        const descriptionAdd = document.querySelector('.description-add');
-        descriptionAdd?.addEventListener('click', function(e) {
-            const target = e.target as HTMLElement;
-           checkCart(Number(target.id.substring(5)));
-        })
         function checkCart(id: number) {
-            let cart = localStorageState.getProducts();
-            if (cart.indexOf(id) != -1) {
-                descriptionAdd!.innerHTML = 'Add to cart';
+            const cart = localStorageState.getProducts();
+            if (cart.indexOf(id) !== -1) {
+                if (descriptionAdd) {
+                descriptionAdd.innerHTML = 'Add to cart';
                 localStorageState.deleteProducts(id);
                 header.changeMainHeader();
                 console.log(localStorageState.getProducts())
+                }
             } else {
-                descriptionAdd!.innerHTML = 'In the cart';
+                if (descriptionAdd) {
+                descriptionAdd.innerHTML = 'In the cart';
+                }
                 localStorageState.putProducts(id);
                 header.changeMainHeader();
                 console.log(localStorageState.getProducts())
             }
         }
 
-        const descriptionBuy = document.querySelector('.description-buy');
-        descriptionBuy?.addEventListener('click', function(e) {
+        descriptionAdd?.addEventListener('click', (e) => {
             const target = e.target as HTMLElement;
-           checkBuy(Number(target.id.substring(4)));
+           checkCart(Number(target.id.substring(5)));
         })
 
         function checkBuy(id: number) {
-            let cart = localStorageState.getProducts();
+            const cart = localStorageState.getProducts();
         
-            if (cart.indexOf(id) == -1) {
+            if (cart.indexOf(id) === -1) {
                 localStorageState.putProducts(id);
                 header.changeMainHeader();
             }
@@ -145,6 +146,12 @@ export default class BookPage {
            cartPage.showModal(windowPast);
               window.location.href = '/#cart';
         }
+
+        const descriptionBuy = document.querySelector('.description-buy');
+        descriptionBuy?.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+           checkBuy(Number(target.id.substring(4)));
+        })
 
     }
 }

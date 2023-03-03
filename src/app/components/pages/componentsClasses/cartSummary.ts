@@ -1,7 +1,4 @@
-import { Product } from "../../../interfaces/Product";
-
 class CartSummary {
-
   updateProducts(amount: number) {
     const summaryProducts = document.getElementById('summary-products');
     if (!summaryProducts) {
@@ -9,6 +6,7 @@ class CartSummary {
     }
     summaryProducts.innerHTML = `${amount}`;
   }
+
   chandeProducts(amount: number) {
     const summaryProducts = document.getElementById('summary-products');
     if (!summaryProducts) {
@@ -16,6 +14,7 @@ class CartSummary {
     }
     summaryProducts.innerHTML = `${amount}`;
   }
+
   updatePrice(price: number) {
     const summaryPrice = document.getElementById('summary-price');
     if (!summaryPrice) {
@@ -23,6 +22,7 @@ class CartSummary {
     }
     summaryPrice.innerHTML = `${price.toFixed(2)}`;
   }
+
   chandePrice(price: number) {
     const summaryPrice = document.getElementById('summary-price');
     if (!summaryPrice) {
@@ -31,5 +31,6 @@ class CartSummary {
     summaryPrice.innerHTML = `${price.toFixed(2)}`;
   }
 }
+
 const cartSummary = new CartSummary();
 export default cartSummary;

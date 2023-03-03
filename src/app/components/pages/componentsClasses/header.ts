@@ -5,11 +5,10 @@ import cartSummary from "./cartSummary";
 import promoCode from "./promoCode";
 
 export class Header {
-  private sum: number = 0;
-  private amount: number = 0;
-  constructor() {
+  private sum = 0;
 
-  }
+  private amount = 0;
+
   updateCartHeader(products: Product[]) {
     const cartHeaderHtml = document.getElementById('header-cart');
     if (!cartHeaderHtml) {
@@ -20,25 +19,25 @@ export class Header {
     }
     this.amount = Object.keys(products).length;
     cartHeaderHtml.innerHTML = `${this.amount}`;
-    let amount = this.amount;
-    document.addEventListener("DOMContentLoaded", function() {
+    const { amount } = this;
+    document.addEventListener("DOMContentLoaded", () => {
       cartSummary.updateProducts(amount);
     });
-
   }
+
   chandeAddCartHeader() {
     const cartHeaderHtml = document.getElementById('header-cart');
     if (!cartHeaderHtml) {
       throw new Error('Result is undefined');
     }
-    this.amount++;
+    this.amount += 1;
     cartHeaderHtml.innerHTML = `${this.amount}`;
     cartSummary.chandeProducts(this.amount);
   }
 
   changeMainHeader() {
-    let productStore = localStorageState.getProducts();
-    let products: Product[] = [];
+    const productStore = localStorageState.getProducts();
+    const products: Product[] = [];
     const resultHeaderHtml = document.getElementById('header-result');
     const cartHeaderHtml = document.getElementById('header-cart');
 
@@ -47,12 +46,15 @@ export class Header {
         products.push(PRODUCTS[id]);
       }
     })
-    console.log(products);
     this.sum = Object.values(products).reduce((sum, item) => sum + item.price, 0);
-    resultHeaderHtml!.innerHTML = `$${this.sum.toFixed(2)}`;
+    if (resultHeaderHtml) {
+    resultHeaderHtml.innerHTML = `$${this.sum.toFixed(2)}`;
+    }
 
     this.amount = Object.keys(products).length;
-    cartHeaderHtml!.innerHTML = `${this.amount}`;
+    if (cartHeaderHtml) {
+    cartHeaderHtml.innerHTML = `${this.amount}`;
+    }
   }
 
   chandeRemoveCartHeader() {
@@ -60,7 +62,7 @@ export class Header {
     if (!cartHeaderHtml) {
       throw new Error('Result is undefined');
     }
-    this.amount--;
+    this.amount -= 1;
     cartHeaderHtml.innerHTML = `${this.amount}`;
     cartSummary.chandeProducts(this.amount);
   }
@@ -76,11 +78,10 @@ export class Header {
     this.sum = Object.values(products).reduce((sum, item) => sum + item.price, 0);
     resultHeaderHtml.innerHTML = `$${this.sum.toFixed(2)}`;
 
-    let sum = +(this.sum.toFixed(2));
-    document.addEventListener("DOMContentLoaded", function() {
-      return cartSummary.updatePrice(sum);
-    });
+    const sum = +(this.sum.toFixed(2));
+    document.addEventListener("DOMContentLoaded", () => cartSummary.updatePrice(sum));
   }
+
   chandeAddResultHeader(price: number) {
     const resultHeaderHtml = document.getElementById('header-result');
     if (!resultHeaderHtml) {
@@ -88,10 +89,11 @@ export class Header {
     }
     this.sum += price;
     resultHeaderHtml.innerHTML = `${this.sum.toFixed(2)}`;
-    let sum = +(this.sum.toFixed(2));
+    const sum = +(this.sum.toFixed(2));
     cartSummary.chandePrice(sum);
     promoCode.updatePrice(sum);
   }
+
   chandeRemoveResultHeader(price: number) {
     const resultHeaderHtml = document.getElementById('header-result');
     if (!resultHeaderHtml) {
@@ -99,7 +101,7 @@ export class Header {
     }
     this.sum -= price;
     resultHeaderHtml.innerHTML = `${this.sum.toFixed(2)}`;
-    let sum = +(this.sum.toFixed(2));
+    const sum = +(this.sum.toFixed(2));
     cartSummary.chandePrice(sum);
     promoCode.updatePrice(sum);
   }
@@ -107,7 +109,3 @@ export class Header {
 }
 const header = new Header();
 export default header;
-
-function createProductsComponent() {
-  throw new Error("Function not implemented.");
-}

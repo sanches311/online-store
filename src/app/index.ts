@@ -1,20 +1,18 @@
 import '../style/app.scss';
 import '../style/page/_modalPage.scss';
-import { initRoute } from './components/router';
-import Listen from './components/listen';
-import { loadLogo } from './components/utils';
+import initRoute from './components/router';
+import loadLogo from './components/utils';
 import listen from './components/listen';
 import header from './components/pages/componentsClasses/header';
-
 
 header.changeMainHeader();
 initRoute();
 loadLogo();
-Listen.listenselectBook();
-Listen.listenView();
+listen.listenselectBook();
+listen.listenView();
 listen.listenSort();
 listen.listenBack();
 listen.listenLiveSearch();
 listen.listenFilterCategory();
 listen.listenFilterQuantity();
-Listen.listenFilterType();
+listen.listenFilterType();
