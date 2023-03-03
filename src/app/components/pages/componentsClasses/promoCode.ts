@@ -1,5 +1,5 @@
 export class PromoCode {
-  updatePrice(price: number) {
+  updatePrice(price: number): void {
     const newPrice: number = price - price / 10;
     const salePrice = document.getElementById('sale-price');
     if (!salePrice) {
@@ -8,20 +8,20 @@ export class PromoCode {
     salePrice.innerHTML = `${newPrice.toFixed(2)}`;
   }
 
-  checkInputPromoCode() {
+  checkInputPromoCode(): void {
     const appliedPromo: string[] = [];
     const inputPromo = document.getElementById('promo-code');
     if (!inputPromo) {
       throw new Error('Input promo code is undefined!');
     }
 
-    function inputValidation(input: string) {
-      function addDropEvent(index: string, price: number) {
+    function inputValidation(input: string): void {
+      function addDropEvent(index: string, price: number): void {
         const buttonDrop = document.getElementById(`applied-drop-button__${appliedPromo.length}`);
         if (!buttonDrop) {
           throw new Error('Button is undefined.');
         }
-        buttonDrop.addEventListener('click', () => {
+        buttonDrop.addEventListener('click', (): void => {
           const dropId = appliedPromo.indexOf(index);
           appliedPromo.splice(dropId, 1);
           if (appliedPromo.length === 0) {
@@ -55,13 +55,13 @@ export class PromoCode {
         });
       }
 
-      function addEvents(inputAdd: string) {
+      function addEvents(inputAdd: string): void {
         const addButton = document.getElementById('app-promo-code');
         if (!addButton) {
           throw new Error('Button is undefined.');
         }
 
-        addButton.addEventListener('click', () => {
+        addButton.addEventListener('click', (): void => {
           (<HTMLInputElement>document.getElementById('promo-code')).value = '';
           addButton.style.display = 'none';
 
@@ -109,7 +109,7 @@ export class PromoCode {
       addEvents(input);
     }
 
-    inputPromo.addEventListener('input', () => {
+    inputPromo.addEventListener('input', (): void => {
       const inputValue = (<HTMLInputElement>document.getElementById('promo-code')).value;
       const regexJs = /^js/i;
       const regexCss = /^css/i;
@@ -146,5 +146,6 @@ export class PromoCode {
     });
   }
 }
+
 const promoCode = new PromoCode();
 export default promoCode;

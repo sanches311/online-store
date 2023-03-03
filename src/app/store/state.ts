@@ -1,6 +1,6 @@
 export class LocalStorageState {
   static getProducts() {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   private keyName = 'products';
@@ -13,7 +13,7 @@ export class LocalStorageState {
     return [];
   }
 
-  putProducts(id: number) {
+  putProducts(id: number): void {
     const products = this.getProducts();
     const index = products.indexOf(id);
     if (index === -1) {
@@ -24,13 +24,13 @@ export class LocalStorageState {
     localStorage.setItem(this.keyName, JSON.stringify(products));
   }
 
-  addProducts(id: number) {
+  addProducts(id: number): void {
     const products = this.getProducts();
     products.push(id);
     localStorage.setItem(this.keyName, JSON.stringify(products));
   }
 
-  deleteProducts(id: number) {
+  deleteProducts(id: number): void {
     const products = this.getProducts();
     const index = products.indexOf(id);
     products.splice(index, 1);

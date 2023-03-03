@@ -1,14 +1,12 @@
 import { Product } from '../../../interfaces/Product';
 
 export default class MainProductItem {
-    constructor(private item: Product) {
-     
-    }
+  constructor(private item: Product) {}
 
-    private getHtmlId = () => `product_${this.item.id}`; 
+  private getHtmlId = (): string => `product_${this.item.id}`;
 
-    books2Column() {
-        return `
+  books2Column(): string {
+    return `
     <div id='${this.item.id}'class="products-container-2">
     <div class="products-container-img">
       <img src="${this.item.imageUrl[0]}" alt="Product image">
@@ -39,21 +37,20 @@ export default class MainProductItem {
     </div>
   </div>
     `;
-    }
+  }
 
-    books3Column() {
-        return `
+  books3Column(): string {
+    return `
       <div id='${this.item.id}' class="products-container-3">
-                  <h3>${this.item.title}</h3>
-                  <div class="products-container-img-3">
-                    <img src="${this.item.imageUrl[0]}" alt="Product image">
-                  </div>
-                  <div class="products-container-buttons">
-                    <button class="main-page-item-button">add to cart</button>
-                    <button id='${this.item.id}' class="main-page-item-button">details</button>
-                  </div>
-                </div>
+        <h3>${this.item.title}</h3>
+        <div class="products-container-img-3">
+          <img src="${this.item.imageUrl[0]}" alt="Product image">
+        </div>
+        <div class="products-container-buttons">
+          <button class="main-page-item-button">add to cart</button>
+          <button id='${this.item.id}' class="main-page-item-button">details</button>
+        </div>
+      </div>
       `;
-    }
-
+  }
 }

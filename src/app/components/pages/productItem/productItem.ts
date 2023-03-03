@@ -9,22 +9,22 @@ export default class ProductItem {
 
   private itemPrice: number = this.item.price;
 
-  private getHtmlIdAdd = () => `add-button_${this.item.id}`;
+  private getHtmlIdAdd = (): string => `add-button_${this.item.id}`;
 
-  private getHtmlIdRemove = () => `remove-button_${this.item.id}`;
+  private getHtmlIdRemove = (): string => `remove-button_${this.item.id}`;
 
-  private getHtmlOrderId = () => `order_${this.item.id}`;
+  private getHtmlOrderId = (): string => `order_${this.item.id}`;
 
-  private getHtmlProductId = () => `product_${this.item.id}`;
+  private getHtmlProductId = (): string => `product_${this.item.id}`;
 
-  private getHtmlPrice = () => `price_${this.item.id}`;
+  private getHtmlPrice = (): string => `price_${this.item.id}`;
 
-  addOrder() {
+  addOrder(): void {
     const buttonAdd = document.getElementById(this.getHtmlIdAdd());
     if (!buttonAdd) {
       throw new Error('Button is undefined');
     }
-    buttonAdd.addEventListener('click', () => {
+    buttonAdd.addEventListener('click', (): void => {
       if (this.order === this.item.quantity) {
         return;
       }
@@ -43,7 +43,7 @@ export default class ProductItem {
     });
   }
 
-  addItemPrice() {
+  addItemPrice(): void {
     const priceHtml = document.getElementById(this.getHtmlPrice());
     if (!priceHtml) {
       throw new Error('Price is undefined');
@@ -52,7 +52,7 @@ export default class ProductItem {
     priceHtml.innerHTML = `${this.itemPrice}`;
   }
 
-  changeNumeration() {
+  changeNumeration(): void {
     const allItemProducts = document.querySelectorAll('.item__num');
     allItemProducts.forEach((elem, index: number) => {
       let itemIndex = index;
@@ -60,13 +60,13 @@ export default class ProductItem {
     });
   }
 
-  removeOrder() {
+  removeOrder(): void {
     const buttonRemove = document.getElementById(this.getHtmlIdRemove());
     const buttonAdd = document.getElementById(this.getHtmlIdAdd());
     if (!buttonRemove || !buttonAdd) {
       throw new Error('Button is undefined');
     }
-    buttonRemove.addEventListener('click', () => {
+    buttonRemove.addEventListener('click', (): void => {
       if (this.order === 1) {
         localStorageState.deleteProducts(this.item.id);
         document.getElementById(this.getHtmlProductId())?.remove();
@@ -91,7 +91,7 @@ export default class ProductItem {
     });
   }
 
-  removeItemPrice() {
+  removeItemPrice(): void {
     const priceHtml = document.getElementById(this.getHtmlPrice());
     if (!priceHtml) {
       throw new Error('Price is undefined');
@@ -100,7 +100,7 @@ export default class ProductItem {
     priceHtml.innerHTML = `${this.itemPrice.toFixed(2)}`;
   }
 
-  render() {
+  render(): string {
     return `
     <div class="products-container__item" id='${this.getHtmlProductId()}'>
     <div class="item__num">${this.index + 1}</div>
@@ -139,7 +139,7 @@ export default class ProductItem {
     `;
   }
 
-  addEvents() {
+  addEvents(): void {
     this.addOrder();
     this.removeOrder();
   }

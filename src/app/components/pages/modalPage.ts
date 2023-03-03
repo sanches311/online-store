@@ -1,7 +1,7 @@
 import cardImg from '../../../assets/img/modal-window/card.png';
 
 export class ModalWindow {
-  addEvents(elem: HTMLElement) {
+  addEvents(elem: HTMLElement): void {
     elem.addEventListener('click', (e) => {
       const modalContainer = document.querySelector('.modal__window');
       if (!modalContainer) {
@@ -17,7 +17,7 @@ export class ModalWindow {
     });
   }
 
-  render() {
+  render(): string {
     return ` <div class="modal modal-active" id='open-modal'>
   <div class="modal-container">
       <div class="modal__window" role="dialog" aria-modal="true">
@@ -75,5 +75,4 @@ export class ModalWindow {
 }
 
 const modalWindow = new ModalWindow();
-
 export default modalWindow;

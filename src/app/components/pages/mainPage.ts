@@ -1,5 +1,6 @@
 import { PRODUCTS } from '../../db/products.db';
 import { Product } from '../../interfaces/Product';
+import { Sort } from '../../interfaces/Sort';
 import MainProductItem from './productItem/mainProductItem';
 import store from '../../store/store';
 import Filter from './filter';
@@ -12,8 +13,6 @@ interface Ioptions {
 }
 
 export default class MainPage {
-  private products: Product[] = store.books;
-
   public stateOptions: Ioptions = {
     options: [
       { value: 'default', label: 'Сортировать по' },
@@ -25,21 +24,19 @@ export default class MainPage {
     currentOptions: 'default',
   };
 
-  addEvents() {
+  addEvents(): void {
     const addButtons = Array.from(document.querySelectorAll('.main-add-button'));
-
     addButtons.forEach((elem) => {
-      elem.addEventListener('click', (e) => {
+      elem.addEventListener('click', (e): void => {
         const target = e.target as HTMLElement;
         localStorageState.putProducts(Number(target.id.substring(8)));
-        console.log(localStorageState.getProducts());
         header.changeMainHeader();
       });
     });
   }
 
-  getSelectOption() {
-    const curr = (value: string) => {
+  getSelectOption(): string {
+    const curr = (value: string): string | boolean => {
       const url = new URL(window.location.href);
       const sort = url.searchParams.get('sort');
       if (sort) {
@@ -60,7 +57,7 @@ export default class MainPage {
       </select>`;
   }
 
-  getBooksHtml() {
+  getBooksHtml(): string {
     const url = new URL(window.location.href);
     const view = url.searchParams.get('big');
     const filter = new Filter(store.books);
@@ -77,7 +74,7 @@ export default class MainPage {
       .join('');
   }
 
-  getBooksCount() {
+  getBooksCount(): Sort {
     const belAll = PRODUCTS.filter((book) => (book.category.belorussian ? book : false)).length;
     const belCurr = store.books.filter((book) => (book.category.belorussian ? book : false)).length;
     const forAll = PRODUCTS.filter((book) => (book.category.foreign ? book : false)).length;
@@ -153,7 +150,7 @@ export default class MainPage {
     };
   }
 
-  getMainPageHtml() {
+  getMainPageHtml(): string {
     return `<main class="main-page">
       <div class="container">
         <section class="all-filters">

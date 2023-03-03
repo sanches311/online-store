@@ -1,6 +1,6 @@
 import logoImg from '../../assets/img/logo.png';
 
-const loadLogo = () => {
+const loadLogo = (): void => {
   const logo = document.querySelector('.logo-img') as HTMLImageElement;
   logo.src = logoImg;
 

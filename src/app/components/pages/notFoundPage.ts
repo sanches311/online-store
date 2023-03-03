@@ -1,8 +1,8 @@
 import img404 from '../../../assets/img/page-404/page-404.png';
 
 export default {
-    getNotFounPage(): string {
-        const html = `<main class="main-page-not-found">
+  getNotFounPage(): string {
+    const html = `<main class="main-page-not-found">
         <div class="container">
             <div class="reading">
                 <img src=${img404} alt="A woman who reading a book." class="reading__picture">
@@ -13,6 +13,6 @@ export default {
             </div>
         </div>
     </main>`;
-        return html;
-    },
+    return html;
+  },
 };

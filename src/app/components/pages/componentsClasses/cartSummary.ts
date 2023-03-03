@@ -1,5 +1,5 @@
 class CartSummary {
-  updateProducts(amount: number) {
+  updateProducts(amount: number): void {
     const summaryProducts = document.getElementById('summary-products');
     if (!summaryProducts) {
       throw new Error('Summary products is undefined');
@@ -7,7 +7,7 @@ class CartSummary {
     summaryProducts.innerHTML = `${amount}`;
   }
 
-  chandeProducts(amount: number) {
+  chandeProducts(amount: number): void {
     const summaryProducts = document.getElementById('summary-products');
     if (!summaryProducts) {
       throw new Error('Summary products is undefined');
@@ -15,7 +15,7 @@ class CartSummary {
     summaryProducts.innerHTML = `${amount}`;
   }
 
-  updatePrice(price: number) {
+  updatePrice(price: number): void {
     const summaryPrice = document.getElementById('summary-price');
     if (!summaryPrice) {
       throw new Error('Summary prise is undefined');
@@ -23,7 +23,7 @@ class CartSummary {
     summaryPrice.innerHTML = `${price.toFixed(2)}`;
   }
 
-  chandePrice(price: number) {
+  chandePrice(price: number): void {
     const summaryPrice = document.getElementById('summary-price');
     if (!summaryPrice) {
       throw new Error('Summary prise is undefined');

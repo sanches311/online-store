@@ -22,7 +22,7 @@ export default class Cart {
 
   private itemsOnPage = 0;
 
-  createProductsComponent() {
+  createProductsComponent(): void {
     const productStore = localStorageState.getProducts();
     PRODUCTS.forEach(({ id }) => {
       if (productStore.indexOf(id) !== -1) {
@@ -33,15 +33,16 @@ export default class Cart {
     this.productsPages = this.productsComponent.slice(0, this.itemsOnPage);
   }
 
-  updateSummary() {
+  updateSummary(): void {
     this.amount = Object.keys(this.productsComponent).length;
     this.price = Object.values(this.productsComponent).reduce((sum, item) => sum + item.item.price, 0);
   }
 
-  createComponentRender() {
+  createComponentRender(): void {
     const cartCelect = document.getElementById('cart-select');
     const allProducts = this.productsComponent;
-    function updateItems() {
+    
+    function updateItems(): void {
       const inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
       const pageNum = document.getElementById('page-clicked')?.textContent;
       if (!pageNum) {
@@ -54,7 +55,8 @@ export default class Cart {
         container.innerHTML = `${data.map((product) => product.render()).join('')}`;
       }
     }
-    cartCelect?.addEventListener('change', (e) => {
+
+    cartCelect?.addEventListener('change', (e): void => {
       const target = e.target as HTMLInputElement;
       const url = new URL(window.location.href);
       const idBook = target.value;
@@ -75,26 +77,25 @@ export default class Cart {
         urlLocation.hash = `cart/?limit=${idBook}&page=${countPages}`;
         window.history.pushState({}, '', urlLocation);
         if (numContainer) {
-        numContainer.innerHTML = `${countPages}`;
+          numContainer.innerHTML = `${countPages}`;
         }
         updateItems();
       }
     });
 
-    function changePage() {
+    function changePage(): void {
       let count = 1;
       const buttonRemove = document.getElementById('pagination-remove');
       const buttonAdd = document.getElementById('pagination-add');
 
-      buttonAdd?.addEventListener('click', () => {
+      buttonAdd?.addEventListener('click', (): void => {
         const inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
         const countPages = Math.ceil(allProducts.length / parseInt(inputValue, 10));
-
         const pageNum = document.getElementById('page-clicked')?.textContent;
         const numContainer = document.getElementById('page-clicked');
-        let num  = 0;
+        let num = 0;
         if (pageNum) {
-         num = parseInt(pageNum, 10);
+          num = parseInt(pageNum, 10);
         }
 
         if (num === countPages) {
@@ -106,15 +107,16 @@ export default class Cart {
         url.hash = `cart/?limit=${inputValue}&page=${count}`;
         window.history.pushState({}, '', url);
         if (numContainer) {
-        numContainer.innerHTML = `${count}`;
+          numContainer.innerHTML = `${count}`;
         }
         updateItems();
       });
-      buttonRemove?.addEventListener('click', () => {
+
+      buttonRemove?.addEventListener('click', (): void => {
         const inputValue = (<HTMLInputElement>document.getElementById('cart-select')).value;
         const pageNum = document.getElementById('page-clicked')?.textContent;
         const numContainer = document.getElementById('page-clicked');
-        let num = 0; 
+        let num = 0;
         if (pageNum) {
           num = parseInt(pageNum, 10);
         }
@@ -124,23 +126,20 @@ export default class Cart {
         if (num === 1) {
           return;
         }
-
         count -= 1;
         const url = new URL(window.location.href);
         url.hash = `cart/?limit=${inputValue}&page=${count}`;
         window.history.pushState({}, '', url);
         if (numContainer) {
-        numContainer.innerHTML = `${count}`;
+          numContainer.innerHTML = `${count}`;
         }
         updateItems();
       });
     }
-
     changePage();
-
   }
 
-  render() {
+  render(): string {
     this.createProductsComponent();
     header.updateCartHeader(this.products);
     header.updateResultHeader(this.products);
@@ -210,7 +209,7 @@ export default class Cart {
       </main>`;
   }
 
-  showModal(windowHash: string) {
+  showModal(windowHash: string): void {
     if (window.location.hash === windowHash) {
       setTimeout(() => {
         const elemModal = document.createElement('div');
@@ -230,14 +229,14 @@ export default class Cart {
     }
   }
 
-  addEvents() {
+  addEvents(): void {
     this.productsComponent.forEach((compotent) => compotent.addEvents());
     const button = document.getElementById('open-modal-window');
     if (!button) {
       throw new Error('Button is undefined');
     }
 
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', (e): void => {
       e.preventDefault();
       const elemModal = document.createElement('div');
       elemModal.classList.add('modal');
@@ -254,7 +253,7 @@ export default class Cart {
       modal.addEvents();
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', (): void => {
       promoCode.checkInputPromoCode();
     });
     this.createComponentRender();

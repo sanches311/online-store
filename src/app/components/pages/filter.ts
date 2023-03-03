@@ -5,7 +5,7 @@ import { PRODUCTS } from '../../db/products.db';
 export default class Filter {
   constructor(private books: Array<Product>) {}
 
-  sort() {
+  sort(): void {
     const url = new URL(window.location.href);
     const sortOpt = url.searchParams.get('sort');
     if (sortOpt) {
@@ -24,7 +24,7 @@ export default class Filter {
     }
   }
 
-  liveSearch() {
+  liveSearch(): void {
     const url = new URL(window.location.href);
     const search = url.searchParams.get('search');
     if (search) {
@@ -34,7 +34,7 @@ export default class Filter {
     } else store.books = PRODUCTS;
   }
 
-  filterCategory() {
+  filterCategory(): void {
     const url = new URL(window.location.href);
     const category = url.searchParams.getAll('category');
     if (category.length) {
@@ -57,7 +57,7 @@ export default class Filter {
     } else store.books = PRODUCTS;
   }
 
-  filterQuantity() {
+  filterQuantity(): void {
     const url = new URL(window.location.href);
     const category = url.searchParams.getAll('quantity');
     if (category.length) {
@@ -72,7 +72,7 @@ export default class Filter {
     }
   }
 
-  filterType() {
+  filterType(): void {
     const url = new URL(window.location.href);
     const category = url.searchParams.getAll('type');
     if (category.length) {

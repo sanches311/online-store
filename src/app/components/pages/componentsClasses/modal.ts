@@ -8,7 +8,7 @@ class Modal {
 
   private error: string[] = [];
 
-  addEvents() {
+  addEvents(): void {
     this.validationFirstName(this.confirm, this.error);
     this.validationPhone(this.confirm, this.error);
     this.validationMail(this.confirm, this.error);
@@ -19,15 +19,17 @@ class Modal {
     this.validationConfirm(this.confirm, this.error);
   }
 
-  validationFirstName(confirm: string[], stringError: string[]) {
+  validationFirstName(confirm: string[], stringError: string[]): void {
     const inputElem = <HTMLInputElement>document.getElementById('input-first-name');
+    
     if (inputElem.value === '') {
       stringError.push(`${inputElem.id}`);
     }
 
-    function checkInput(input: string) {
+    function checkInput(input: string): void {
       const regexFirstName = /(^[A-Z][a-z]{2,14} [A-Z][a-z]{2,14}$)|(^[А-Я][а-я]{2,14} [А-Я][а-я]{2,14}$)/;
       const inputField = <HTMLInputElement>document.getElementById('input-first-name');
+
       if (!regexFirstName.test(input)) {
         inputField.classList.remove('text-field__input-valid');
         inputField.classList.add('text-field__input-invalid');
@@ -47,21 +49,23 @@ class Modal {
       }
     }
 
-    inputElem.addEventListener('input', () => {
+    inputElem.addEventListener('input', (): void => {
       const inputValue = (<HTMLInputElement>document.getElementById('input-first-name')).value;
       checkInput(inputValue);
     });
   }
 
-  validationPhone(confirm: string[], stringError: string[]) {
+  validationPhone(confirm: string[], stringError: string[]): void {
     const input = <HTMLInputElement>document.getElementById('input-phone');
+
     if (input.value === '') {
       stringError.push(`${input.id}`);
     }
 
-    function checkInput(inputPhone: string) {
+    function checkInput(inputPhone: string): void {
       const regexPhone = /^[/+][\d/(/)/ -]{8,14}\d$/;
       const inputField = <HTMLInputElement>document.getElementById('input-phone');
+
       if (!regexPhone.test(inputPhone)) {
         inputField.classList.remove('text-field__input-valid');
         inputField.classList.add('text-field__input-invalid');
@@ -81,21 +85,23 @@ class Modal {
       }
     }
 
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (): void => {
       input.value = input.value.replace(/[^/+\d]/g, '').substring(0, 14);
       checkInput(input.value);
     });
   }
 
-  validationMail(confirm: string[], stringError: string[]) {
+  validationMail(confirm: string[], stringError: string[]): void {
     const input = <HTMLInputElement>document.getElementById('input-mail');
+
     if (input.value === '') {
       stringError.push(`${input.id}`);
     }
 
-    function checkInput(inputMail: string) {
+    function checkInput(inputMail: string): void {
       const regexMail = /^[\w-.]+@[\w-]+\.[a-z]{2,4}$/i;
       const inputField = <HTMLInputElement>document.getElementById('input-mail');
+
       if (!regexMail.test(inputMail)) {
         inputField.classList.remove('text-field__input-valid');
         inputField.classList.add('text-field__input-invalid');
@@ -115,22 +121,23 @@ class Modal {
       }
     }
 
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (): void => {
       const inputValue = (<HTMLInputElement>document.getElementById('input-mail')).value;
       checkInput(inputValue);
     });
   }
 
-  validationAdress(confirm: string[], stringError: string[]) {
+  validationAdress(confirm: string[], stringError: string[]): void {
     const input = <HTMLInputElement>document.getElementById('input-adress');
     if (input.value === '') {
       stringError.push(`${input.id}`);
     }
 
-    function checkInput(inputAddress: string) {
+    function checkInput(inputAddress: string): void {
       const regexAdress =
         /(^[A-Z][a-z]{4,14} [A-Z][a-z]{4,14} [A-Z][a-z]{4,14}$)|(^[А-Я][а-я]{4,14} [А-Я][а-я]{4,14} [А-Я][а-я]{4,14}$)/;
       const inputField = <HTMLInputElement>document.getElementById('input-adress');
+
       if (!regexAdress.test(inputAddress)) {
         inputField.classList.remove('text-field__input-valid');
         inputField.classList.add('text-field__input-invalid');
@@ -150,19 +157,19 @@ class Modal {
       }
     }
 
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (): void => {
       const inputValue = (<HTMLInputElement>document.getElementById('input-adress')).value;
       checkInput(inputValue);
     });
   }
 
-  validationCard(confirm: string[], stringError: string[]) {
+  validationCard(confirm: string[], stringError: string[]): void {
     const inputEl = <HTMLInputElement>document.getElementById('input-card');
     if (inputEl.value === '') {
       stringError.push(`${inputEl.id}`);
     }
 
-    function checkInput(input: string) {
+    function checkInput(input: string): void {
       const regexCard = /([0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$)/;
       const inputValue = input
         .split(/(\d{4})/)
@@ -171,6 +178,7 @@ class Modal {
       (<HTMLInputElement>document.getElementById('input-card')).value = inputValue;
       const inputField = <HTMLInputElement>document.getElementById('input-card');
       const iconCard = <HTMLElement>document.getElementById('modal-card-img');
+
       if (input[0] === '1' || input[0] === '4' || input[0] === '7') {
         iconCard.setAttribute('src', `${belCard}`);
       } else if (input[0] === '2' || input[0] === '5' || input[0] === '8') {
@@ -180,6 +188,7 @@ class Modal {
       } else {
         iconCard.setAttribute('src', `${cardImg}`);
       }
+
       const val = (<HTMLInputElement>document.getElementById('input-card')).value;
       if (!regexCard.test(val)) {
         inputField.classList.remove('text-field__input-valid');
@@ -200,31 +209,30 @@ class Modal {
       }
     }
 
-    inputEl.addEventListener('input', () => {
+    inputEl.addEventListener('input', (): void => {
       inputEl.value = inputEl.value.replace(/[^\d]/g, '').substring(0, 16);
       checkInput(inputEl.value);
     });
   }
 
-  validationThru(confirm: string[], stringError: string[]) {
+  validationThru(confirm: string[], stringError: string[]): void {
     const input = <HTMLInputElement>document.getElementById('input-thru');
     if (input.value === '') {
       stringError.push(`${input.id}`);
     }
 
-    function checkInput(inputCheck: string) {
+    function checkInput(inputCheck: string): void {
       const regexCard = /([0-9]{2}\/[0-9]{2}$)/;
-
+      console.log(inputCheck);
       const inputValue = inputCheck
         .split(/(\d{2})/)
         .filter((item) => item !== '')
-        .join('/');
+       .join('/');
 
       (<HTMLInputElement>document.getElementById('input-thru')).value = inputValue;
 
       const inputField = <HTMLInputElement>document.getElementById('input-thru');
       const val = (<HTMLInputElement>document.getElementById('input-thru')).value;
-
       const month = inputCheck.substring(0, 2);
 
       if (!regexCard.test(val) || parseInt(month, 10) > 12) {
@@ -246,21 +254,20 @@ class Modal {
       }
     }
 
-    input.addEventListener('input', () => {
-      input.value = input.value.replace(/[^/+\d]/g, '').substring(0, 4);
+    input.addEventListener('input', (): void => {
+      input.value = input.value.replace(/[^+\d]/g, '').substring(0, 4);
       checkInput(input.value);
     });
   }
 
-  validationCVV(confirm: string[], stringError: string[]) {
+  validationCVV(confirm: string[], stringError: string[]): void {
     const input = <HTMLInputElement>document.getElementById('input-cvv');
     if (input.value === '') {
       stringError.push(`${input.id}`);
     }
 
-    function checkInput(inputCheckInput: string) {
+    function checkInput(inputCheckInput: string): void {
       const regexCard = /([0-9]{3}$)/;
-
       const inputField = <HTMLInputElement>document.getElementById('input-cvv');
 
       if (!regexCard.test(inputCheckInput)) {
@@ -282,19 +289,19 @@ class Modal {
       }
     }
 
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (): void => {
       input.value = input.value.replace(/[^/+\d]/g, '').substring(0, 3);
       checkInput(input.value);
     });
   }
 
-  validationConfirm(confirm: string[], stringError: string[]) {
+  validationConfirm(confirm: string[], stringError: string[]): void {
     const buttonConfirm = document.getElementById('modal-confirm');
     const errorContainer = document.querySelector('.form__attention');
-    buttonConfirm?.addEventListener('click', () => {
+    buttonConfirm?.addEventListener('click', (): void => {
       if (confirm.length !== 7) {
         errorContainer?.classList.remove('display-error');
-        const errorP = stringError.reduce((newArr: string, elem: string) => {
+        const errorP = stringError.reduce((newArr: string, elem: string): string => {
           const label = document.querySelector(`[for="${elem}"]`);
           let labelText: string | null = '';
           if (label) {
@@ -320,5 +327,6 @@ class Modal {
     });
   }
 }
+
 const modal = new Modal();
 export default modal;
