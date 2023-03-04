@@ -1,0 +1,56 @@
+@import "../base/variabless";
+
+.footer {
+  height: 80px;
+  background-color: $color1;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      color: $color-text1;
+      font-size: 1.7rem;
+      font-family: $text-fonts;
+      line-height: 3.1rem;
+      font-style: normal;
+      font-weight: $font-weight;
+    }
+  }
+}
+
+.schooll-logo {
+  min-width: 10rem;
+  object-fit: contain;
+  object-position: center;
+  border: 1px solid $color2;
+  padding: 10px;
+}
+
+.git-dev {
+  a:link {
+    color: $color-text1;
+    font-size: 1.7rem;
+    font-family: $text-fonts;
+    line-height: 3.1rem;
+    font-style: normal;
+    font-weight: $font-weight;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: $color-text1;
+    font-size: 1.7rem;
+    font-family: $text-fonts;
+    line-height: 3.1rem;
+    font-style: normal;
+    font-weight: $font-weight;
+    text-decoration: none;
+  }
+
+  a:hover {
+    border-bottom: 1px solid $color2;
+    cursor: pointer;
+  }
+}

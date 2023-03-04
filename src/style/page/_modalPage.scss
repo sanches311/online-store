@@ -1,0 +1,314 @@
+@import "../base/variabless";
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  padding: 30px 0;
+  background-color: rgba(0, 0, 0, .2);
+
+  &__window {
+    width: 670px;
+    max-width: 100%;
+    min-height: 495px;
+    margin: 50px 0;
+    padding: 30px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    background: $color1;
+    border-radius: 10px;
+    filter: drop-shadow(0px 0px 20px rgba(27, 55, 100, 0.3));
+    overflow: visible;
+    transition: transform 0.2s ease 0s, opacity 0.2s ease 0s;
+    transform: scale(0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      width: 40%;
+      margin: 0 auto 10px;
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 2.2rem;
+      line-height: 3.3rem;
+      color: $color2;
+      text-align: center;
+      padding-bottom: 5px;
+      background: linear-gradient(to left, $color3, $color-text2 100%);
+      background-position: 0 100%;
+      background-size: 100% 2px;
+      background-repeat: repeat-x;
+    }
+  }
+}
+
+.modal_active {
+  visibility: visible;
+}
+
+.modal_active .modal__window {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-container {
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 100%;
+  min-height: 100%;
+  margin: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width: 75%;
+  padding: 20px;
+  margin: $margit-center;
+
+  &__field {
+    max-width: 100%;
+    margin-bottom: 15px;
+
+    label {
+      width: 100%;
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.2rem;
+      line-height: 1.8rem;
+      color: $color3;
+    }
+
+    input {
+      width: 100%;
+      padding: 3px 10px;
+      background: #F9F9F9;
+      border: 1px solid #D1D1D1;
+      border-radius: 12px;
+      font-family: $text-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.4rem;
+      line-height: 1.9rem;
+      color: $color-text2;
+    }
+
+    input:focus {
+      outline: none;
+      border: 1.5px solid $color2;
+    }
+  }
+
+  &__card {
+    width: 75%;
+    margin: $margit-center;
+    margin-bottom: 10px;
+
+    h3 {
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 2.2rem;
+      line-height: 3.3rem;
+      color: $color2;
+      text-align: center;
+      margin: $margit-center;
+    }
+  }
+
+  &__attention {
+    width: 75%;
+    margin: 20px auto 20px;
+    border: 1px solid;
+    border-image-slice: 1;
+    border-width: 2px;
+    border-image-source: linear-gradient(to right, $color-text2, $color3);
+
+    .error {
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.7rem;
+      line-height: 2.3rem;
+      color: $color2;
+      text-align: center;
+    }
+  }
+
+  &__button {
+    width: 218px;
+    margin: $margit-center;
+    button {
+      width: 100%;
+      padding: 10px 35px;
+      background: $color3;
+      border: 2px solid $color-text1;
+      border-radius: 12px;
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.5rem;
+      line-height: 2.2rem;
+      text-align: center;
+      color: $color-text2;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      background-color: $color-text1;
+      box-shadow: 0 0 0 1px #cbd6ee;
+      color: $color3;
+      cursor: pointer;
+    }
+    
+   button:focus {
+      border-color: $color2;
+      cursor: pointer;
+    }
+  }
+}
+
+.card-details {
+
+  &__icons {
+    width: 22.5%;
+    height: 28px; //Фиксированная высота для иконки карты
+    margin-top: 19px;
+    border-radius: 12px;
+    background: #F9F9F9;
+    border: 1px solid #D1D1D1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      padding: 1px;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  &__number {
+    width: 75%;
+
+    label {
+      width: 100%;
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.2rem;
+      line-height: 1.8rem;
+      color: $color3;
+    }
+
+    input {
+      width: 100%;
+      padding: 3px 10px;
+      background: #F9F9F9;
+      border: 1px solid #D1D1D1;
+      border-radius: 12px;
+      font-family: $text-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.4rem;
+      line-height: 1.9rem;
+      color: $color-text2;
+    }
+
+    input:focus {
+      outline: none;
+      border: 1.5px solid $color2;
+    }
+  }
+
+  &__valid {
+    width: 49%;
+
+    label {
+      width: 100%;
+      font-family: $headers-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.2rem;
+      line-height: 1.8rem;
+      color: $color3;
+    }
+
+    input {
+      width: 100%;
+      padding: 3px 10px;
+      background: #F9F9F9;
+      border: 1px solid #D1D1D1;
+      border-radius: 12px;
+      font-family: $text-fonts;
+      font-style: normal;
+      font-weight: $font-weight;
+      font-size: 1.4rem;
+      line-height: 1.9rem;
+      color: $color-text2;
+    }
+
+    input:focus {
+      outline: none;
+      border: 1.5px solid $color2;
+    }
+  }
+}
+
+.two-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+input[type=text].text-field__input-invalid,
+input[type=tel].text-field__input-invalid,
+input[type=email].text-field__input-invalid {
+  border-color: #dc3545; 
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5625rem center;
+  background-size: 2rem 2rem;
+}
+
+input[type=text].text-field__input-valid,
+input[type=tel].text-field__input-valid,
+input[type=email].text-field__input-valid {
+  border-color: #198754;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5625rem center;
+  background-size: 2rem 2rem;
+}
+
+.text-field__input-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.text-field__input-valid:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 25%);
+}
+
+.display-error {
+  display: none;
+}

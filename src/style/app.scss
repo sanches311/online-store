@@ -1,0 +1,27 @@
+@import './base/normalize';
+@import './layout/header';
+@import './layout/footer';
+@import './page/mainPage';
+@import './page/cartPage';
+@import './page/notFoundPage';
+@import './page/bookPage';
+
+* {
+  box-sizing: border-box;
+}
+html {
+  height: 100vh;
+  font-size: 10px;
+  background-color: $color3;
+}
+
+.wrapper {
+  max-width: 1260px;
+  margin: $margit-center;
+}
+
+.container {
+  max-width: $container-width;
+  margin: $margit-center;
+  height: 100%;
+}
